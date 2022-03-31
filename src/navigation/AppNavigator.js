@@ -12,6 +12,9 @@ import EventScreen from '../screens/EventScreen';
 import QRScanScreen from '../screens/QRScanScreen';
 import MenuScreen from '../screens/MenuScreen';
 
+// Import Navigators.
+import QRScanNavigator from './QRScanNavigator';
+
 // Create the Navigator
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +22,7 @@ function AppNavigator(){
 	return(
 		<NavigationContainer>
 			<Tab.Navigator
+				initialRouteName="QRScan"
 				screenOptions={{
 					tabBarActiveBackgroundColor: colors.primary,
 					tabBarActiveTintColor: colors.light,
@@ -29,7 +33,7 @@ function AppNavigator(){
 				}}
 			>
         		<Tab.Screen
-					name="Event"
+					name="Events"
 					component={EventScreen}
 					options={{
 						tabBarIcon: ({size, color}) => (
@@ -39,7 +43,7 @@ function AppNavigator(){
 				/>
 				<Tab.Screen
 					name="QRScan"
-					component={QRScanScreen}
+					component={QRScanNavigator}
 					options={{
 						tabBarIcon: ({size, color}) => (
 							<FontAwesome name="qrcode" size={size} color={color}/>

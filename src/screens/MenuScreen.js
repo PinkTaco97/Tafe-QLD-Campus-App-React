@@ -9,7 +9,7 @@ import {
 // Import Custom Compponents.
 import colors from '../config/colors';
 
-// Render the Event Screen.
+// Render the Menu Screen.
 function MenuScreen(props) {
     return (
         <ImageBackground
