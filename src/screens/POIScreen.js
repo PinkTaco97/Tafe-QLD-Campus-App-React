@@ -10,7 +10,7 @@ import {
 // Import Custom Compponents.
 import colors from '../config/colors';
 import pointsApi from '../api/points';
-import POIInformation from '../components/POIInfomation';
+import POI from '../components/POI-1';
 
 // Render the Point of Intrest Screen.
 function POIScreen({ navigation, route }) {
@@ -30,14 +30,14 @@ function POIScreen({ navigation, route }) {
 		LoadPoint(data);
 	}, [data])
 
-	const LoadPoint = async (id) => {
-		const response = await pointsApi.getPoint(id);
+	const LoadPoint = async (code) => {
+		const response = await pointsApi.getPoint(code);
 		//setPoint(response.data);
 		if(!response.ok){
 			alert("QR Code Not Found.");
 			setFound(false);
 			//console.log(response.problem);
-			navigation.navigate("Scan");
+			//navigation.navigate("Scan");
 		}
 		else{
 			//alert(response.data.discription);
@@ -49,22 +49,17 @@ function POIScreen({ navigation, route }) {
 
 	if(found === true){
 		return(
-			<POIInformation
+			<POI
 				title={point.title}
-				description={point.discription}
+				description={point.description}
+				imageURL={point.image}
 				onPress={() => navigation.navigate("Scan")}
 			/>
 		)
 	}
 
     return (
-        <ImageBackground
-			style={styles.background}
-			source={require("../assets/background.jpg")}
-		>
-			<Text style={styles.heading}>{data}</Text>
-			<Button title="Scan Again" onPress={() => navigation.navigate("Scan")}/>
-		</ImageBackground>
+        <></>
     );
 }
 

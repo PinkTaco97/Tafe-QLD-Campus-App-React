@@ -2,7 +2,7 @@ import client from './client';
 
 const endpoint = '/points/';
 
-const getPoint = (id) => client.get('/points/'+id);
+const getPoint = (code) => client.get('/points/'+code);
 
 export default {
 	getPoint,

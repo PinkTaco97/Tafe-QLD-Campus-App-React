@@ -9,6 +9,8 @@
 export default {
 	primary: '#C2272F',
 	secondary: '#79181D',
+	black: '#000',
+	white: '#fff',
 	dark: '#333',
 	light: '#eee',
 }

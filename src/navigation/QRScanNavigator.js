@@ -1,5 +1,8 @@
 // Import Thrid Party Libraies.
 import React from 'react';
+import {
+	Platform,
+} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -16,11 +19,18 @@ function QRScanNavigator(){
 			initialRouteName="Scan"
 			screenOptions={{
 				headerShown: false,
-				animation: 'slide_from_right',
+				animation: 'slide_from_bottom',
 			}}
 		>
 			<Stack.Screen name="Scan" component={QRScanScreen}/>
-			<Stack.Screen name="Info" component={POIScreen}/>
+			<Stack.Screen
+				name="Info"
+				component={POIScreen}
+				options={{
+					presentation: 'modal',
+					headerShown: Platform.OS === 'android' ? true : false,
+					headerTitle: " ",
+				}}/>
       	</Stack.Navigator>
 	);
 }

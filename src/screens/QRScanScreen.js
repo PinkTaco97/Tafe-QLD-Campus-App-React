@@ -5,16 +5,17 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	Button,
 	ActivityIndicator,
 	Image,
 	SafeAreaView,
 } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useFocusEffect  } from '@react-navigation/native'
+import { FontAwesome } from '@expo/vector-icons';
 
 // Import Custom Compponents.
 import colors from '../config/colors';
+import Button from '../components/Button';
 
 // Render the Scan Screen.
 function QRScanScreen({ navigation, route }) {
@@ -23,7 +24,7 @@ function QRScanScreen({ navigation, route }) {
 	const [hasCameraPermission, setHasCameraPermission] = useState(null);
 	
 	// Whether the App is Scanning for a QR Code.
-	const [scanning, setScanning] = useState(true);
+	const [scanned, setScanned] = useState(false);
 	
 	// Request Camera Permission from the User.
 	const RequestCameraPermission = () => {
@@ -35,7 +36,8 @@ function QRScanScreen({ navigation, route }) {
 
 	// Called when a Barcode is Scanned.
 	const onBarCodeScanned = ({ type, data }) => {
-		setScanning(false);
+		setScanned(true);
+		//console.log("Barcode Scanned: (Type: " + type + ") (Data: " + data + ")");
 		navigation.navigate("Info", data);
 	};
 
@@ -47,7 +49,7 @@ function QRScanScreen({ navigation, route }) {
 	// Called when the Screen is Focused.
 	useFocusEffect(
 		React.useCallback(() => {
-			setScanning(true);
+			setScanned(false);
 		}, [])
 	);
 
@@ -60,23 +62,32 @@ function QRScanScreen({ navigation, route }) {
 				hasCameraPermission === false ?
 				<View style={styles.container}>
 					<Text style={styles.heading}>Please allow access to Camera</Text>
-					<Button title='Allow Camera' color={colors.primary} onPress={() => RequestCameraPermission()}/>
+					<Button title='Allow Camera' onPress={() => RequestCameraPermission()}/>
 				</View> :
+				scanned === false ?
 				<View style={[StyleSheet.absoluteFillObject, styles.barcodeContainer]}>
+					<View style={styles.header}>
+						<FontAwesome style={styles.headerLogo} name="qrcode" size={50} color={colors.light}/>
+						<Text style={styles.headerText}>Scan QR Code</Text>
+					</View>
 					<View style={styles.guideContainer}>
-						
-						<Text style={styles.text}>Scan QR Code</Text>
 						<Image
 							style={styles.guide}
 							source={require("../assets/guide.png")}
 						/>
 					</View>
 					<BarCodeScanner
-						onBarCodeScanned={!scanning ? undefined : onBarCodeScanned}
 						style={StyleSheet.absoluteFillObject}
+						onBarCodeScanned={scanned ? undefined : onBarCodeScanned}
+						barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
 					/>
+				</View> :
+				<View style={StyleSheet.absoluteFillObject}>
+					<View style={styles.header}>
+						<FontAwesome style={styles.headerLogo} name="qrcode" size={50} color={colors.light}/>
+						<Text style={styles.headerText}>Scan QR Code</Text>
+					</View>
 				</View>
-				
 			}
 		</SafeAreaView>
     );
@@ -89,13 +100,13 @@ const styles = StyleSheet.create({
 		padding: 25,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.dark,
+		backgroundColor: colors.black,
 	},
 	guideContainer: {
 		position: 'absolute',
 		justifyContent: 'center',
 		alignItems: 'center',
-		top: 0,
+		top: 125,
 		bottom: 0,
 		left: 0,
 		right: 0,
@@ -107,26 +118,27 @@ const styles = StyleSheet.create({
 		marginTop: 0,
 		
 	},
-	text: {
+	header: {
 		position: 'absolute',
-		top: 50,
-		padding: 10,
-		borderRadius: 25,
+		top: 0,
+		height: 125,
+		width: '100%',
+		// borderRadius: 25,
 		fontSize: 20,
 		fontWeight: 'bold',
 		color: colors.light,
 		backgroundColor: colors.primary,
 		textAlign: 'center',
 		textAlignVertical: 'center',
+		alignItems: 'center',
+		justifyContent: 'flex-end',
+		padding: 10,
+		zIndex: 1,
 	},
-	heading: {
+	headerText: {
 		fontSize: 20,
-		padding: 15,
-		marginVertical: 25,
-		color: colors.dark,
-		backgroundColor: colors.light,
-		borderRadius: 25,
-		textAlign: 'center'
+		fontWeight: 'bold',
+		color: colors.light,
 	},
 })
 

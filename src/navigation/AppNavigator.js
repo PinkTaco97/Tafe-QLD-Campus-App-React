@@ -9,7 +9,6 @@ import colors from '../config/colors';
 
 // Import Application Screens.
 import EventScreen from '../screens/EventScreen';
-import QRScanScreen from '../screens/QRScanScreen';
 import MenuScreen from '../screens/MenuScreen';
 
 // Import Navigators.
