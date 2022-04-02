@@ -11,12 +11,12 @@ import colors from '../config/colors';
 import QRScanButton from '../components/QRScanButton';
 
 // Import Application Screens.
-import EventsScreen from '../screens/EventsScreen';
 import MapScreen from '../screens/MapScreen';
 import MenuScreen from '../screens/MenuScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 // Import Navigators.
+import EventNavigator from './EventNavigator';
 import QRScanNavigator from './QRScanNavigator';
 
 // Create the Navigator
@@ -37,7 +37,7 @@ function AppNavigator(){
 			>
 				<Tab.Screen
 					name="Events"
-					component={EventsScreen}
+					component={EventNavigator}
 					options={{
 						tabBarIcon: ({size, color}) => (
 							<FontAwesome name="calendar" size={size} color={color}/>

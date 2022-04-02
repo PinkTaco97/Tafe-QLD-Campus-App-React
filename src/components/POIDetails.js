@@ -8,22 +8,19 @@ import {
     ScrollView,
 } from 'react-native';
 
-// Import Custom Compponents.
+// Import Config Settings.
 import colors from '../config/colors';
-import Button from '../components/Button';
-import BackButton from './BackButton';
-import Space from './Space';
 
-// Render the Event Screen.
+// Render the Point of Interest Component.
 function POI({title, description, imageURL, onPress}) {
 	const image = { uri: imageURL }
     return ( 
 		<SafeAreaView style={styles.container}>
-				<ScrollView style={styles.scrollView}>
-					<Image style={styles.image} source={image}/>
-					<Text style={styles.title}>"{title}"</Text>
-					<Text style={styles.description}>{description}</Text>
-				</ScrollView>
+			<ScrollView style={styles.scrollView}>
+				<Image style={styles.image} source={image}/>
+				<Text style={styles.title}>"{title}"</Text>
+				<Text style={styles.description}>{description}</Text>
+			</ScrollView>
 		</SafeAreaView>
     );
 }
@@ -40,7 +37,6 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: 400,
 	},
-
 	title: {
 		height: 50,
 		fontSize: 25,

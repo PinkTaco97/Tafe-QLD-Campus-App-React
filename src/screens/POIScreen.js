@@ -1,16 +1,11 @@
 // Import Thrid Party Libraies.
 import React, { useState, useEffect } from 'react';
-import {
-	ImageBackground,
-	StyleSheet,
-	Text,
-	Button,
-} from 'react-native';
 
-// Import Custom Compponents.
-import colors from '../config/colors';
+// Import UI Compponents.
+import POIDetails from '../components/POIDetails';
+
+// Import API Compponents.
 import pointsApi from '../api/points';
-import POI from '../components/POI-1';
 
 // Render the Point of Intrest Screen.
 function POIScreen({ navigation, route }) {
@@ -18,7 +13,7 @@ function POIScreen({ navigation, route }) {
 	// The Data passed from the QR Scan Screen.
 	const data = route.params;
 
-	// The Point loaed from the Database.
+	// The Point loaded from the Database.
 	const [point, setPoint] = useState();
 	
 	// Whether a Point was found from the Data. 
@@ -27,29 +22,30 @@ function POIScreen({ navigation, route }) {
 	// Called when Componenet is Rendered.
 	useEffect(() => {
 		setFound(false);
-		LoadPoint(data);
+		GetPoint(data);
 	}, [data])
 
-	const LoadPoint = async (code) => {
+	// Get the Point Data from the API.
+	const GetPoint = async (code) => {
+
+		// The Response from the API.
 		const response = await pointsApi.getPoint(code);
-		//setPoint(response.data);
+
+		// If there was an Error.
 		if(!response.ok){
 			alert("QR Code Not Found.");
 			setFound(false);
-			//console.log(response.problem);
-			//navigation.navigate("Scan");
 		}
 		else{
-			//alert(response.data.discription);
-			//console.log(response.data);
 			setPoint(response.data)
 			setFound(true);
 		}
 	}
 
+	// If 
 	if(found === true){
 		return(
-			<POI
+			<POIDetails
 				title={point.title}
 				description={point.description}
 				imageURL={point.image}
@@ -62,21 +58,6 @@ function POIScreen({ navigation, route }) {
         <></>
     );
 }
-
-// Style the Components.
-const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		padding: 25,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	heading: {
-		fontSize: 30,
-		fontWeight: 'bold',
-		color: colors.light,
-	},
-})
 
 // Export the Component.
 export default POIScreen;
