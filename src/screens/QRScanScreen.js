@@ -17,7 +17,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import colors from '../config/colors';
 import Button from '../components/Button';
 
-// Render the Scan Screen.
+// Render the QR Scan Screen.
 function QRScanScreen({ navigation, route }) {
 
 	// Whether the App has Permission to Access the Camera.

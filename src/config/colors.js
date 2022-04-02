@@ -7,7 +7,7 @@
 	Old App Dark: #1C503D
 */
 export default {
-	primary: '#C2272F',
+	primary: '#E31B23',
 	secondary: '#79181D',
 	black: '#000',
 	white: '#fff',

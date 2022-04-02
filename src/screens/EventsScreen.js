@@ -9,8 +9,8 @@ import {
 // Import Custom Compponents.
 import colors from '../config/colors';
 
-// Render the Event Screen.
-function EventScreen(props) {
+// Render the Events Screen.
+function EventsScreen(props) {
     return (
         <ImageBackground
 			style={styles.background}
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default EventScreen;
+export default EventsScreen;
