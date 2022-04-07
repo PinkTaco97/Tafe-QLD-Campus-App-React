@@ -9,11 +9,12 @@ function EventDetailsScreen({ route }) {
 
 	// The Event Data passed from the Previous Screen.
 	const event = route.params;
+	//console.log(event);
 
     return (
         <EventDetails
 			title={event.title}
-			description={event.description}
+			content={event.content}
 			imageURL={event.image}
 			location={event.location}
 			startDate={event.event_start}

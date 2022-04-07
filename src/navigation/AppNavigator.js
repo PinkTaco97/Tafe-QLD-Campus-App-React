@@ -12,12 +12,12 @@ import QRScanButton from '../components/QRScanButton';
 
 // Import Application Screens.
 import MapScreen from '../screens/MapScreen';
-import MenuScreen from '../screens/MenuScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 // Import Navigators.
 import EventNavigator from './EventNavigator';
 import QRScanNavigator from './QRScanNavigator';
+import MenuNavigator from './MenuNavigator';
 
 // Create the Navigator
 const Tab = createBottomTabNavigator();
@@ -26,7 +26,7 @@ function AppNavigator(){
 	return(
 		<NavigationContainer>
 			<Tab.Navigator
-				initialRouteName="Events"
+				initialRouteName="Menu"
 				screenOptions={{
 					tabBarActiveBackgroundColor: colors.primary,
 					tabBarActiveTintColor: colors.white,
@@ -65,7 +65,7 @@ function AppNavigator(){
 				/>
 				<Tab.Screen
 					name="Menu"
-					component={MenuScreen}
+					component={MenuNavigator}
 					options={{
 						tabBarIcon: ({size, color}) => (
 							<FontAwesome name="cutlery" size={size} color={color}/>

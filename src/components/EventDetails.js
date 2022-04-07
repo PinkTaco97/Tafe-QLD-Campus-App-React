@@ -17,7 +17,7 @@ import BackButton from './BackButton';
 import Space from './Space';
 
 // Render the Event Details Component.
-function EventDetails({title, description, imageURL, location, startDate}) {
+function EventDetails({title, content, imageURL, location, startDate}) {
 	const image = { uri: imageURL }
 	const date = new Date(startDate);
 	const formatedDate = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
@@ -28,7 +28,7 @@ function EventDetails({title, description, imageURL, location, startDate}) {
 				<Text style={styles.location}>{location}</Text>
 				<Text style={styles.date}>{formatedDate}</Text>
 				<Text style={styles.title}>{title}</Text>
-				<Text style={styles.description}>{description}</Text>
+				<Text style={styles.content}>{content}</Text>
 			</ScrollView>
 		</SafeAreaView>
     );
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
 	scrollView: {
 		backgroundColor: colors.white,
 	},
-    description: {
+    content: {
 		fontSize: 15,
 		color: colors.dark,
 		backgroundColor: colors.white,

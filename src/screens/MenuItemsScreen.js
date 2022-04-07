@@ -14,39 +14,44 @@ import {
 import colors from '../config/colors';
 
 // Import API Compponents.
-import eventsApi from '../api/events';
+import menuApi from '../api/menu';
 
-// Import UI Components.
-import EventItem from '../components/EventItem';
+// Import UI Compponents.
 import Space from '../components/Space';
+import MenuItem from '../components/MenuItem';
 
-// Render the Upcoming Events Screen.
-function UpcomingEventsScreen({ navigation }) {
 
-	// The Events loaded from the Database.
-	const [events, setEvents] = useState([]);
-	
+// Render the Menu Screen.
+function MenuItemsScreen({ route }) {
+
+	// The Data passed from the QR Scan Screen.
+	const category = route.params.id;
+
+	// The Categories loaded from the Database.
+	const [menuItems, setMenuItems] = useState([]);
+
 	// Whether there was an error. 
 	const [error, setError] = useState(false);
 
 	// Called when Componenet is Rendered.
 	useEffect(() => {
-		GetUpcomingEvents();
+		GetMenuItems(category);
 	}, [])
 
-	// Get the Upcoming Events from the API.
-	const GetUpcomingEvents = async () => {
-		const response = await eventsApi.getUpcomingEvents();
+	// Get the Menu Categories from the API.
+	const GetMenuItems = async (category) => {
+		const response = await menuApi.getMenuItems(category);
 
 		// If there was an Error.
 		if(!response.ok){
 			alert(response.problem);
 			console.log(response.problem);
 			setError(true);
+			return (<></>);
 		}
 		else{
 			//console.log(response.data);
-			setEvents(response.data)
+			setMenuItems(response.data);
 			setError(false);
 		}
 	}
@@ -54,20 +59,21 @@ function UpcomingEventsScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
 			<View style={styles.header}>
-				<Text style={styles.heading}>Upcoming Events</Text>
+				<Text style={styles.heading}>Menu</Text>
 			</View>
+			{menuItems.length === 0 ?
+				<Text style={styles.message}>No Items in This Category</Text> :
+				<></>
+			}
 			<FlatList
 				style={styles.scrollView}
-				data={events}
-				keyExtractor={event => event.id.toString()}
+				data={menuItems}
+				// numColumns={2}
+				keyExtractor={category => category.id.toString()}
 				renderItem={({ item }) =>
-					<EventItem
-						title={item.title}
-						description={item.description}
-						imageURL={item.image}
-						location={item.location}
-						startDate={item.event_start}
-						onPress={() => navigation.navigate("EventDetails", item)}
+					<MenuItem
+						name={item.name}
+						price={item.price}
 					/>
 				}
 				ItemSeparatorComponent={() =>
@@ -114,4 +120,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default UpcomingEventsScreen;
+export default MenuItemsScreen;
