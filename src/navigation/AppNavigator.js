@@ -1,87 +1,45 @@
 // Import Thrid Party Libraies.
 import React from 'react';
+import {
+	Platform,
+} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome } from '@expo/vector-icons';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Import Config files.
 import colors from '../config/colors';
 
-// Import Custom UI Compponents.
-import QRScanButton from '../components/QRScanButton';
-
-// Import Application Screens.
-import MapScreen from '../screens/MapScreen';
-import SettingsScreen from '../screens/SettingsScreen';
-
 // Import Navigators.
-import EventNavigator from './EventNavigator';
-import QRScanNavigator from './QRScanNavigator';
-import MenuNavigator from './MenuNavigator';
+import TabNavigator from './TabNavigator';
 
-// Create the Navigator
-const Tab = createBottomTabNavigator();
+// Import Screens.
+import ModalScreen from '../screens/ModalScreen';
+import CampusPickerScreen from '../screens/CampusPickerScreen';
+
+// Create a Native Stack Navigator.
+const Stack = createNativeStackNavigator();
 
 function AppNavigator(){
 	return(
 		<NavigationContainer>
-			<Tab.Navigator
-				initialRouteName="Menu"
+			<Stack.Navigator
+				initialRouteName="Main"
 				screenOptions={{
-					tabBarActiveBackgroundColor: colors.primary,
-					tabBarActiveTintColor: colors.white,
-					tabBarInactiveBackgroundColor: colors.white,
-					tabBarInactiveTintColor: colors.dark,
 					headerShown: false,
+					animation: 'slide_from_bottom',
 				}}
 			>
-				<Tab.Screen
-					name="Events"
-					component={EventNavigator}
+				<Stack.Screen name="Main" component={TabNavigator}/>
+				<Stack.Screen
+					name="Modal"
+					component={CampusPickerScreen}
 					options={{
-						tabBarIcon: ({size, color}) => (
-							<FontAwesome name="calendar" size={size} color={color}/>
-						),
+						presentation: 'modal',
+						headerShown: Platform.OS === 'android' ? true : false,
+						headerTitle: "Select a Campus",
 					}}
 				/>
-        		<Tab.Screen
-					name="Map"
-					component={MapScreen}
-					options={{
-						tabBarIcon: ({size, color}) => (
-							<FontAwesome name="map" size={size} color={color}/>
-						),
-					}}
-				/>
-				<Tab.Screen
-					name="QRScan"
-					component={QRScanNavigator}
-					options={({ navigation }) => ({
-						tabBarButton: () => <QRScanButton onPress={() => navigation.navigate("QRScan")}/>,
-						tabBarIcon: ({size, color}) => (
-							<FontAwesome name="qrcode" size={size} color={color}/>
-						),
-					})}
-				/>
-				<Tab.Screen
-					name="Menu"
-					component={MenuNavigator}
-					options={{
-						tabBarIcon: ({size, color}) => (
-							<FontAwesome name="cutlery" size={size} color={color}/>
-						),
-					}}
-				/>
-				<Tab.Screen
-					name="Settings"
-					component={SettingsScreen}
-					options={{
-						tabBarIcon: ({size, color}) => (
-							<FontAwesome name="cog" size={size} color={color}/>
-						),
-					}}
-				/>
-      		</Tab.Navigator>
+      		</Stack.Navigator>
 		</NavigationContainer>
 	);
 }

@@ -17,15 +17,19 @@ import colors from '../config/colors';
 import menuApi from '../api/menu';
 
 // Import UI Compponents.
+import Header from '../components/Header';
 import Space from '../components/Space';
 import MenuItem from '../components/MenuItem';
 
 
 // Render the Menu Screen.
-function MenuItemsScreen({ route }) {
+function MenuItemsScreen({ navigation, route }) {
 
-	// The Data passed from the QR Scan Screen.
+	// The ID of the Category of MenuItems to load from the Database.
 	const category = route.params.id;
+
+	// The Name of the Category
+	const categoryName = route.params.name;
 
 	// The Categories loaded from the Database.
 	const [menuItems, setMenuItems] = useState([]);
@@ -58,11 +62,13 @@ function MenuItemsScreen({ route }) {
 
     return (
         <SafeAreaView style={styles.container}>
-			<View style={styles.header}>
-				<Text style={styles.heading}>Menu</Text>
-			</View>
+			<Header
+				title={categoryName}
+				back={true}
+				onBack={() => {navigation.navigate("MenuCategories");}}
+			/>
 			{menuItems.length === 0 ?
-				<Text style={styles.message}>No Items in This Category</Text> :
+				<Text style={styles.message}>No items in this Category.</Text> :
 				<></>
 			}
 			<FlatList
@@ -106,6 +112,12 @@ const styles = StyleSheet.create({
 		color: colors.white,
 		fontSize: 30,
 		fontWeight: 'bold',
+	},
+	message: {
+		color: colors.black,
+		fontSize: 15,
+		fontWeight: 'bold',
+		padding: 10,
 	},
 	scrollView: {
 		width: "100%",

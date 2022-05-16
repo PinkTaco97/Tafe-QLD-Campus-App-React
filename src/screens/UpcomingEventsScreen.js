@@ -9,6 +9,7 @@ import {
     ScrollView,
 	FlatList,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 // Import Config Settings.
 import colors from '../config/colors';
@@ -17,6 +18,7 @@ import colors from '../config/colors';
 import eventsApi from '../api/events';
 
 // Import UI Components.
+import Header from '../components/Header';
 import EventItem from '../components/EventItem';
 import Space from '../components/Space';
 
@@ -30,9 +32,16 @@ function UpcomingEventsScreen({ navigation }) {
 	const [error, setError] = useState(false);
 
 	// Called when Componenet is Rendered.
-	useEffect(() => {
-		GetUpcomingEvents();
-	}, [])
+	// useEffect(() => {
+	// 	GetUpcomingEvents();
+	// }, [])
+
+	// Called when Screen is Focused.
+	useFocusEffect(
+		React.useCallback(() => {
+			GetUpcomingEvents();
+		}, [])
+	);
 
 	// Get the Upcoming Events from the API.
 	const GetUpcomingEvents = async () => {
@@ -53,9 +62,7 @@ function UpcomingEventsScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-			<View style={styles.header}>
-				<Text style={styles.heading}>Upcoming Events</Text>
-			</View>
+			<Header title="Upcoming Events"/>
 			<FlatList
 				style={styles.scrollView}
 				data={events}

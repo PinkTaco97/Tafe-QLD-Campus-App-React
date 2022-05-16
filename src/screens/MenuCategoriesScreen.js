@@ -9,16 +9,19 @@ import {
     ScrollView,
 	FlatList,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 // Import Config Settings.
 import colors from '../config/colors';
 
-// Import API Compponents.
+// Import API Components.
 import menuApi from '../api/menu';
 
-// Import UI Compponents.
-import Space from '../components/Space';
+// Import UI Components.
+import Header from '../components/Header';
 import MenuCategoryItem from '../components/MenuCategoryItem';
+import Space from '../components/Space';
 
 
 // Render the Menu Screen.
@@ -31,18 +34,34 @@ function MenuScreen({ navigation }) {
 	const [error, setError] = useState(false);
 
 	// Called when Componenet is Rendered.
-	useEffect(() => {
-		GetMenuCategories();
-	}, [])
+	// useEffect(() => {
+	// 	GetSelectedCampus();
+	// 	GetMenuCategories();
+	// }, [selectedCampus])
+
+	// Called when Screen is Focused.
+	useFocusEffect(
+		React.useCallback(() => {
+			GetSelectedCampus();
+		}, [])
+	);
+
+	const GetSelectedCampus = async () => {
+		try {
+			GetMenuCategories(Number(await AsyncStorage.getItem("@selected_campus")));
+		} catch (e) {
+			alert(e);
+		}
+	}
 
 	// Get the Menu Categories from the API.
-	const GetMenuCategories = async () => {
-		const response = await menuApi.getMenuCategories();
+	const GetMenuCategories = async (campusID) => {
+		const response = await menuApi.getMenuCategoriesCampus(campusID);
 
 		// If there was an Error.
 		if(!response.ok){
-			alert(response.problem);
-			console.log(response.problem);
+			//alert(response.problem);
+			console.log(response.originalError);
 			setError(true);
 			return (<></>);
 		}
@@ -55,9 +74,11 @@ function MenuScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-			<View style={styles.header}>
-				<Text style={styles.heading}>Menu</Text>
-			</View>
+			<Header title="Cafe Menu"/>
+			{categories.length === 0 ?
+				<Text style={styles.message}>This Campus dosn't have a Menu.</Text> :
+				<></>
+			}
 			<FlatList
 				style={styles.scrollView}
 				data={categories}
@@ -89,27 +110,15 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		backgroundColor: colors.light,
 	},
-	header: {
-		width: "100%",
-		height: 75,
-		backgroundColor: colors.primary,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	heading: {
-		color: colors.white,
-		fontSize: 30,
+	message: {
+		color: colors.black,
+		fontSize: 15,
 		fontWeight: 'bold',
+		padding: 10,
 	},
 	scrollView: {
 		width: "100%",
 		padding: 25,
-	},
-	event: {
-		width: "100%",
-		height: 400,
-		backgroundColor: colors.primary,
-		marginVertical: 25,
 	},
 })
 

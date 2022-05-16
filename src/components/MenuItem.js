@@ -10,9 +10,9 @@ import {
 import colors from '../config/colors';
 
 // Render the Menu Category Item Component.
-function MenuCategoryItem({name, price, onPress}) {
+function MenuItem({name, price}) {
     return ( 
-		<View style={styles.container} onPress={onPress}>
+		<View style={styles.container}>
 			<Text style={styles.title}>{name} ${price}</Text>
 		</View>
     );
@@ -22,8 +22,6 @@ function MenuCategoryItem({name, price, onPress}) {
 const styles = StyleSheet.create({
 	container: {
 		width: '100%',
-		// maxWidth: '50%',
-		// height: 50,
 		alignItems: 'center',
 		justifyContent: 'center',
         backgroundColor: colors.white,
@@ -45,4 +43,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default MenuCategoryItem;
+export default MenuItem;

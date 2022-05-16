@@ -1,15 +1,21 @@
 // Import Thrid Party Libraies.
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Import UI Compponents.
 import EventDetails from '../components/EventDetails';
 
 // Render Event Details Screen.
-function EventDetailsScreen({ route }) {
+function EventDetailsScreen({ navigation, route }) {
 
 	// The Event Data passed from the Previous Screen.
 	const event = route.params;
-	//console.log(event);
+
+	// Called when Componenet is Rendered.
+	useEffect(() => {
+		navigation.setOptions({
+			headerTitle: event.title
+		})
+	}, [])
 
     return (
         <EventDetails

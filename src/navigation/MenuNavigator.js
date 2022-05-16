@@ -14,7 +14,7 @@ function MenuNavigator(){
 		<Stack.Navigator
 			initialRouteName="MenuCategories"
 			screenOptions={{
-				headerShown: true,
+				headerShown: false,
 				animation: 'slide_from_right',
 			}}
 		>

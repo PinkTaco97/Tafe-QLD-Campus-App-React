@@ -4,11 +4,15 @@ import {
 	Image,
 	Dimensions,
 	StyleSheet,
+	View,
 } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 
-// Import Custom Compponents.
+// Import Config Settings.
 import colors from '../config/colors';
+
+// Import UI Components.
+import Header from '../components/Header';
 
 // Render the Map Screen.
 function MapScreen(props) {
@@ -18,33 +22,26 @@ function MapScreen(props) {
 	//require('../assets/map.png');
 
     return (
-		<ImageZoom
-			cropWidth={Dimensions.get('window').width}
-			cropHeight={Dimensions.get('window').height}
-			imageWidth={962}
-			imageHeight={1171}
-		>
- 			<Image
-			 	style={{width:962, height:1171}}
-				source={image}
-			/>
-		</ImageZoom>
+		<View>
+			<Header title="Campus Map"/>
+			<ImageZoom
+				cropWidth={Dimensions.get('window').width}
+				cropHeight={Dimensions.get('window').height}
+				imageWidth={962}
+				imageHeight={1171}
+			>
+				<Image
+					style={{width:962, height:1171}}
+					source={image}
+				/>
+			</ImageZoom>
+		</View>
     );
 }
 
 // Style the Components.
 const styles = StyleSheet.create({
-	background: {
-		flex: 1,
-		padding: 25,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	heading: {
-		fontSize: 30,
-		fontWeight: 'bold',
-		color: colors.light,
-	},
+	
 })
 
 // Export the Component.

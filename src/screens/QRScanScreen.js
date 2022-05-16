@@ -12,6 +12,7 @@ import {
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useFocusEffect  } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 
 // Import Custom Compponents.
 import colors from '../config/colors';
