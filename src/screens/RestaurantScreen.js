@@ -14,10 +14,10 @@ import colors from '../config/colors';
 import Header from '../components/Header';
 
 // Render the Map Screen.
-function ModalScreen() {
+function RestaurantScreen() {
     return (
 		<View>
-			<Header title="Modal"/>
+			<Header title="Restaurant"/>
 		</View>
     );
 }
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default ModalScreen;
+export default RestaurantScreen;

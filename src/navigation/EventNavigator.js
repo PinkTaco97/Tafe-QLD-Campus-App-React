@@ -13,7 +13,7 @@ import EventDetailsScreen from '../screens/EventDetailsScreen';
 // Create a Native Stack Navigator.
 const Stack = createNativeStackNavigator();
 
-function QRScanNavigator(){
+function EventNavigator(){
 	return(
 		<Stack.Navigator
 			initialRouteName="UpcomingEvents"
@@ -36,4 +36,4 @@ function QRScanNavigator(){
 }
 
 // Export the Component.
-export default QRScanNavigator;
+export default EventNavigator;

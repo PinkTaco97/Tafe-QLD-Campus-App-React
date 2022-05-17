@@ -15,7 +15,9 @@ import SettingsScreen from '../screens/SettingsScreen';
 
 // Import Navigators.
 import EventNavigator from './EventNavigator';
+import SDGNavigator from './SDGNavigator';
 import QRScanNavigator from './QRScanNavigator';
+import FoodNavigator from './FoodNavigator';
 import MenuNavigator from './MenuNavigator';
 
 // Create the Navigator
@@ -44,11 +46,11 @@ function TabNavigator(){
 				}}
 			/>
         	<Tab.Screen
-				name="Map"
-				component={MapScreen}
+				name="SDG"
+				component={SDGNavigator}
 				options={{
 					tabBarIcon: ({size, color}) => (
-						<FontAwesome name="map" size={size} color={color}/>
+						<FontAwesome name="globe" size={size} color={color}/>
 					),
 				}}
 			/>
@@ -63,8 +65,8 @@ function TabNavigator(){
 				})}
 			/>
 			<Tab.Screen
-				name="Menu"
-				component={MenuNavigator}
+				name="Food"
+				component={FoodNavigator}
 				options={{
 					tabBarIcon: ({size, color}) => (
 						<FontAwesome name="cutlery" size={size} color={color}/>
