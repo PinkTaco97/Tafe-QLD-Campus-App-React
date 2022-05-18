@@ -17,7 +17,7 @@ import BackButton from './BackButton';
 import Space from './Space';
 
 // Render the Event Details Component.
-function EventDetails({title, content, imageURL, location, startDate}) {
+function EventDetails({title, content, imageURL, location, startDate, onRegister}) {
 	const image = { uri: imageURL }
 	const date = new Date(startDate);
 	const formatedDate = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
@@ -29,6 +29,8 @@ function EventDetails({title, content, imageURL, location, startDate}) {
 				<Text style={styles.date}>{formatedDate}</Text>
 				<Text style={styles.title}>{title}</Text>
 				<Text style={styles.content}>{content}</Text>
+				<Button title="Register" onPress={onRegister}></Button>
+				<Space height={25}/>
 			</ScrollView>
 		</SafeAreaView>
     );

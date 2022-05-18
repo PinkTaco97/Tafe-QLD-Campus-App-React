@@ -4,11 +4,11 @@ import client from './client';
 // Set the API Endpoint.
 //const endpoint = '/campus/';
 
-// Get all Upcoming Events from the Server.
-const getRegions = () => client.get('/regions/');
+// Get all the Regions.
+const getRegions = () => client.get('/region/list');
 
-// Get all Upcoming Events from the Server.
-const getCampuses = (region) => client.get('/regions/campuses/'+region);
+// Get all the Campuses for a given Region.
+const getCampuses = (regionID) => client.get('/campus/list/'+regionID);
 
 // Export the API functions.
 export default {

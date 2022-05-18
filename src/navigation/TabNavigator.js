@@ -10,15 +10,13 @@ import colors from '../config/colors';
 import QRScanButton from '../components/QRScanButton';
 
 // Import Application Screens.
-import MapScreen from '../screens/MapScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 
 // Import Navigators.
 import EventNavigator from './EventNavigator';
 import SDGNavigator from './SDGNavigator';
 import QRScanNavigator from './QRScanNavigator';
 import FoodNavigator from './FoodNavigator';
-import MenuNavigator from './MenuNavigator';
+import MoreNavigator from './MoreNavigator';
 
 // Create the Navigator
 const Tab = createBottomTabNavigator();
@@ -37,46 +35,51 @@ function TabNavigator(){
 			}}
 		>
 			<Tab.Screen
-				name="Events"
+				name="EventsTab"
 				component={EventNavigator}
 				options={{
+					tabBarLabel: "Events",
 					tabBarIcon: ({size, color}) => (
 						<FontAwesome name="calendar" size={size} color={color}/>
 					),
 				}}
 			/>
         	<Tab.Screen
-				name="SDG"
+				name="SDGTab"
 				component={SDGNavigator}
 				options={{
+					tabBarLabel: "SDG",
 					tabBarIcon: ({size, color}) => (
 						<FontAwesome name="globe" size={size} color={color}/>
 					),
 				}}
 			/>
 			<Tab.Screen
-				name="QRScan"
+				name="QRScanTab"
 				component={QRScanNavigator}
 				options={({ navigation }) => ({
-					tabBarButton: () => <QRScanButton onPress={() => navigation.navigate("QRScan")}/>,
+					tabBarLabel: "QRScan",
+					tabBarButton: () => <QRScanButton onPress={() => navigation.navigate("QRScanTab")}/>,
 					tabBarIcon: ({size, color}) => (
 						<FontAwesome name="qrcode" size={size} color={color}/>
 					),
 				})}
 			/>
 			<Tab.Screen
-				name="Food"
+				name="FoodTab"
 				component={FoodNavigator}
 				options={{
+					tabBarLabel: "Food",
 					tabBarIcon: ({size, color}) => (
 						<FontAwesome name="cutlery" size={size} color={color}/>
 					),
 				}}
 			/>
 			<Tab.Screen
-				name="More"
-				component={SettingsScreen}
+				name="MoreTab"
+				component={MoreNavigator}
 				options={{
+					tabBarLabel: "More",
 					tabBarIcon: ({size, color}) => (
 						<FontAwesome name="th-large" size={size} color={color}/>
 					),

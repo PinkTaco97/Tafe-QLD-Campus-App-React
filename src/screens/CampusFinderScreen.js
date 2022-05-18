@@ -14,8 +14,8 @@ import colors from '../config/colors';
 // Import UI Components.
 import Header from '../components/Header';
 
-// Render the Map Screen.
-function MapScreen(props) {
+// Render the Campus Finder Screen.
+function CampusFinderScreen(props) {
 
 	const image = require('../assets/map.png');
 	//{uri: "https://tafeqld.edu.au/content/dam/tafe/en/documents/pdfs/campus-maps/far-north-queensland/atherton-campusmap.pdf"}
@@ -45,4 +45,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default MapScreen;
+export default CampusFinderScreen;

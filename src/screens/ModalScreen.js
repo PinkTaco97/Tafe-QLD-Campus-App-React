@@ -13,7 +13,7 @@ import colors from '../config/colors';
 // Import UI Components.
 import Header from '../components/Header';
 
-// Render the Map Screen.
+// Render the Modal Screen.
 function ModalScreen() {
     return (
 		<View>

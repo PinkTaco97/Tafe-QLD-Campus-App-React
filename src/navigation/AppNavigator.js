@@ -11,10 +11,12 @@ import colors from '../config/colors';
 
 // Import Navigators.
 import TabNavigator from './TabNavigator';
+import AuthNavigator from './AuthNavigator';
 
 // Import Screens.
 import ModalScreen from '../screens/ModalScreen';
 import CampusPickerScreen from '../screens/CampusPickerScreen';
+import WebViewScreen from '../screens/WebViewScreen';
 
 // Create a Native Stack Navigator.
 const Stack = createNativeStackNavigator();
@@ -37,6 +39,15 @@ function AppNavigator(){
 						presentation: 'modal',
 						headerShown: Platform.OS === 'android' ? true : false,
 						headerTitle: "Select a Campus",
+					}}
+				/>
+				<Stack.Screen
+					name="WebView"
+					component={WebViewScreen}
+					options={{
+						presentation: 'modal',
+						headerShown: Platform.OS === 'android' ? true : false,
+						headerTitle: "WebView",
 					}}
 				/>
       		</Stack.Navigator>

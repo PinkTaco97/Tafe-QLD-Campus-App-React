@@ -13,11 +13,11 @@ import colors from '../config/colors';
 // Import UI Components.
 import Header from '../components/Header';
 
-// Render the Restaurant Screen.
-function RestaurantScreen() {
+// Render the Register Screen.
+function RegisterScreen() {
     return (
 		<View>
-			<Header title="Restaurant"/>
+			<Header title="Register"/>
 		</View>
     );
 }
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default RestaurantScreen;
+export default RegisterScreen;

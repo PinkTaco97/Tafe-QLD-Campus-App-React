@@ -5,7 +5,7 @@ import client from './client';
 const endpoint = '/events/';
 
 // Get all Upcoming Events from the Server.
-const getUpcomingEvents = () => client.get('/events/upcoming/');
+const getUpcomingEvents = () => client.get('/events/upcoming');
 
 // Export the API functions.
 export default {

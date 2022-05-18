@@ -15,7 +15,7 @@ import Button from '../components/Button';
 import Space from '../components/Space';
 import SettingsItem from '../components/SettingsItem';
 
-// List of Settings Pages.
+// List of More Pages.
 const settings = [
 	{
 		"title": "Change Campus",
@@ -49,8 +49,8 @@ const settings = [
 	},
 ]
 
-// Render the Settings Screen.
-function SettingsScreen({ navigation }) {
+// Render the More Screen.
+function MoreScreen({ navigation }) {
     return (
         <View style={styles.container}>
 			<Header title="Settings"/>
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default SettingsScreen;
+export default MoreScreen;

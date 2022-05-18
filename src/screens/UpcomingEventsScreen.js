@@ -73,7 +73,7 @@ function UpcomingEventsScreen({ navigation }) {
 						description={item.description}
 						imageURL={item.image}
 						location={item.location}
-						startDate={item.event_start}
+						startDate={item.eventStart}
 						onPress={() => navigation.navigate("EventDetails", item)}
 					/>
 				}

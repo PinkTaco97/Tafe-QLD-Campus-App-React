@@ -25,11 +25,12 @@ import colors from '../config/colors';
 // Style the Components.
 const styles = StyleSheet.create({
 	button: {
-		width: '100%',
+		// width: '100%',
 		borderRadius: 10,
 		justifyContent: 'center',
 		alignItems: 'center',
 		padding: 15,
+		margin: 15,
 		marginVertical: 10,
 	},
 	text: {
