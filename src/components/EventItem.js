@@ -58,8 +58,9 @@ const styles = StyleSheet.create({
 		color: colors.black,
 		backgroundColor: colors.white,
 		paddingHorizontal: 10,
-		borderRadius: 25,
+		borderRadius: 15,
 		textAlignVertical: 'center',
+		overflow: 'hidden',
 	},
 	location: {
 		height: 30,
@@ -71,8 +72,9 @@ const styles = StyleSheet.create({
 		color: colors.white,
 		backgroundColor: colors.primary,
 		paddingHorizontal: 10,
-		borderRadius: 25,
+		borderRadius: 15,
 		textAlignVertical: 'center',
+		overflow: 'hidden',
 	},
 	title: {
 		height: 75,

@@ -62,28 +62,30 @@ function UpcomingEventsScreen({ navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-			<Header title="Upcoming Events"/>
-			<FlatList
-				style={styles.scrollView}
-				data={events}
-				keyExtractor={event => event.id.toString()}
-				renderItem={({ item }) =>
-					<EventItem
-						title={item.title}
-						description={item.description}
-						imageURL={item.image}
-						location={item.location}
-						startDate={item.eventStart}
-						onPress={() => navigation.navigate("EventDetails", item)}
-					/>
-				}
-				ItemSeparatorComponent={() =>
-					<Space height={25}/>
-				}
-				ListFooterComponent={() =>
-					<Space height={55}/>
-				}
-			/>
+			<View style={styles.contentWrapper}>
+				<Header title="Upcoming Events"/>
+				<FlatList
+					style={styles.scrollView}
+					data={events}
+					keyExtractor={event => event.id.toString()}
+					renderItem={({ item }) =>
+						<EventItem
+							title={item.title}
+							description={item.description}
+							imageURL={item.image}
+							location={item.location}
+							startDate={item.eventStart}
+							onPress={() => navigation.navigate("EventDetails", item)}
+						/>
+					}
+					ItemSeparatorComponent={() =>
+						<Space height={25}/>
+					}
+					ListFooterComponent={() =>
+						<Space height={55}/>
+					}
+				/>
+			</View>
 		</SafeAreaView>
     );
 }
@@ -91,6 +93,11 @@ function UpcomingEventsScreen({ navigation }) {
 // Style the Components.
 const styles = StyleSheet.create({
 	container: {
+		flex: 1,
+		
+		backgroundColor: colors.primary,
+	},
+	contentWrapper: {
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',

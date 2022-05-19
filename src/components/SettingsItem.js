@@ -17,7 +17,7 @@ function SettingsItem({title, icon, onPress}) {
 			<FontAwesome
 				style={styles.icon}
 				name={icon}
-				size={30}
+				size={40}
 				color={colors.dark}
 			/>
 			<Text style={styles.title}>{title}</Text> 
@@ -28,33 +28,37 @@ function SettingsItem({title, icon, onPress}) {
 // Style the Components.
 const styles = StyleSheet.create({
 	container: {
-		width: '100%',
-		height: 75,
-		// alignItems: 'center',
+		flex: 1,
+		height: 150,
+		margin: 12.5,
+		alignItems: 'center',
 		justifyContent: 'center',
         backgroundColor: colors.white,
 		overflow: 'hidden',
+		borderRadius: 10,
 	},
 	title: {
-		height: 75,
-		marginLeft: 75,
-		fontSize: 15,
+		// position: 'absolute',
+		height: 25,
+		marginTop: 100,
+		fontSize: 12,
 		color: colors.dark,
-		textAlign: 'left',
+		textAlign: 'center',
 		textAlignVertical: 'center',
+		// backgroundColor: colors.primary,
 	},
     icon: {
 		position: 'absolute',
-		top: 12.5,
-		left: 12.5,
-		height: 50,
-		width: 50,
+		// top: 25,
+		// left: 12.5,
+		// height: 75,
+		// flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 		// backgroundColor: colors.primary,
 		textAlign: 'center',
 		textAlignVertical: 'center',
-		borderRadius: 50,
+		// borderRadius: 50,
 	},
 })
 

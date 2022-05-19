@@ -102,7 +102,7 @@ function CampusPickerScreen({navigation, props}) {
     return (
 		<View style={styles.container}>
 			{/* <Header title="Campus Picker"/> */}
-			<Text style={styles.heading}>Region:</Text>
+			<Text style={styles.heading}>Select a Region:</Text>
 			<Picker
 				selectedValue={selectedRegion}
 				style={styles.picker}
@@ -114,7 +114,7 @@ function CampusPickerScreen({navigation, props}) {
 				{/* <Picker.Item label="Select Region" value={-1} key={-1} /> */}
 				{regions.map(region => <Picker.Item label={region.name} value={region.id} key={region.id}/>)}
 			</Picker>
-			<Text style={styles.heading}>Campus:</Text>
+			<Text style={styles.heading}>Select a Campus:</Text>
 			<Picker
 				selectedValue={selectedCampus}
 				style={styles.picker}
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 	},
 	heading: {
+		margin: 5,
 		padding: 5,
 		fontSize: 15,
 	},

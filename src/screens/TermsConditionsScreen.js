@@ -14,12 +14,16 @@ import colors from '../config/colors';
 // Import UI Components.
 import Header from '../components/Header';
 
-// Render the SDG Screen.
-function SDGScreen() {
+// Render the Terms & Conditions Screen.
+function TermsConditionsScreen({ navigation }) {
     return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.contentWrapper}>
-				<Header title="SDG Info"/>
+				<Header
+					title="Terms & Conditions"
+					back={true}
+					onBack={() => {navigation.navigate("More");}}
+				/>
 			</View>
 		</SafeAreaView>
     );
@@ -38,4 +42,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default SDGScreen;
+export default TermsConditionsScreen;

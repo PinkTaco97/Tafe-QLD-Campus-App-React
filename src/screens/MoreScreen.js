@@ -3,6 +3,7 @@ import React from 'react';
 import {
 	StyleSheet,
 	View,
+	SafeAreaView,
 	FlatList,
 } from 'react-native';
 
@@ -24,60 +25,66 @@ const settings = [
 	},
 	{
 		"title": "Send Feedback",
-		"screen": "",
+		"screen": "Feedback",
 		"icon": "comment",
 	},
 	{
 		"title": "Report a Bug",
-		"screen": "",
+		"screen": "ReportBug",
 		"icon": "bug",
 	},
 	{
 		"title": "Terms & Conditions",
-		"screen": "",
+		"screen": "TermsConditions",
 		"icon": "info-circle",
 	},
 	{
 		"title": "Privacy Policy",
-		"screen": "",
+		"screen": "PrivacyPolicy",
 		"icon": "warning",
 	},
 	{
 		"title": "Credits",
-		"screen": "",
+		"screen": "Credits",
 		"icon": "group",
+	},
+	{
+		"title": "Campus Finder",
+		"screen": "CampusFinder",
+		"icon": "map-marker",
 	},
 ]
 
 // Render the More Screen.
 function MoreScreen({ navigation }) {
     return (
-        <View style={styles.container}>
-			<Header title="Settings"/>
-			<FlatList
-				style={styles.scrollView}
-				data={settings}
-				// numColumns={2}
-				keyExtractor={setting => setting.title}
-				renderItem={({ item }) =>
-					<SettingsItem
-						title={item.title}
-						icon={item.icon}
-						onPress={() => navigation.navigate(item.screen)}
-					/>
-				}
-				ItemSeparatorComponent={() =>
-					<Space height={10}/>
-				}
-				ListHeaderComponent={() =>
-					<Space height={10}/>
-				}
-				ListFooterComponent={() =>
-					<Space height={55}/>
-				}
-			/>
-			{/* {settings.map(setting => <SettingsItem title={setting.title} icon={setting.icon} onPress={() => navigation.navigate(setting.screen)} />)} */}
-		</View>
+        <SafeAreaView style={styles.container}>
+			<View style={styles.contentWrapper}>
+				<Header title="More"/>
+				<FlatList
+					style={styles.scrollView}
+					data={settings}
+					numColumns={2}
+					keyExtractor={setting => setting.title}
+					renderItem={({ item }) =>
+						<SettingsItem
+							title={item.title}
+							icon={item.icon}
+							onPress={() => navigation.navigate(item.screen)}
+						/>
+					}
+					ItemSeparatorComponent={() =>
+						<Space height={10}/>
+					}
+					ListHeaderComponent={() =>
+						<Space height={10}/>
+					}
+					ListFooterComponent={() =>
+						<Space height={55}/>
+					}
+				/>
+			</View>
+		</SafeAreaView>
     );
 }
 
@@ -85,6 +92,11 @@ function MoreScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: colors.primary,
+	},
+	contentWrapper: {
+		flex: 1,
+		backgroundColor: colors.light,
 	},
 })
 

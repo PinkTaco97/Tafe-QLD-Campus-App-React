@@ -14,12 +14,16 @@ import colors from '../config/colors';
 // Import UI Components.
 import Header from '../components/Header';
 
-// Render the SDG Screen.
-function SDGScreen() {
+// Render the Report a Bug Screen.
+function ReportBugScreen({ navigation }) {
     return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.contentWrapper}>
-				<Header title="SDG Info"/>
+				<Header
+					title="Report a Bug"
+					back={true}
+					onBack={() => {navigation.navigate("More");}}
+				/>
 			</View>
 		</SafeAreaView>
     );
@@ -38,4 +42,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default SDGScreen;
+export default ReportBugScreen;
