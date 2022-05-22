@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Import the Application Screens.
-import SDGScreen from '../../src/screens/SDGScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 // Create a Native Stack Navigator.
 const Stack = createNativeStackNavigator();
@@ -21,7 +21,7 @@ function AuthNavigator(){
 				animation: 'slide_from_right',
 			}}
 		>
-			<Stack.Screen name="Login" component={SDGScreen}/>
+			<Stack.Screen name="Login" component={LoginScreen}/>
       	</Stack.Navigator>
 	);
 }

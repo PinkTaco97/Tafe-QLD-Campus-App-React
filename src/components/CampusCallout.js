@@ -2,6 +2,7 @@
 import React from 'react';
 import {
 	Image,
+	ImageBackground,
 	SafeAreaView,
 	StyleSheet,
 	Text,
@@ -27,7 +28,7 @@ function CampusCallout({name, imageURL, onPress}) {
     return ( 
 		<View style={styles.container} onPress={onPress}>
 			<Text style={styles.title}>{name}</Text>
-			<Image style={styles.image} source={image}/>
+			<ImageBackground  style={styles.image} source={image}/>
 			
 		</View>
     );

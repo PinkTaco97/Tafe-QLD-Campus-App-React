@@ -12,12 +12,13 @@ import colors from '../config/colors';
 /**
  * @param {string} title The Text displayed inside of the Button.
  * @param {string} color The background color of the Button.
+ * @param {style} style Custom styling applied to the componnent.
  * @param {function} onPress The function called when the Button is Pressed.
  */
- function Button({title, color = 'primary', onPress}) {
+ function Link({title, color = 'primary', onPress, style}) {
 	return (
-		<TouchableOpacity style={[styles.button, {backgroundColor: colors[color]}]} onPress={onPress}>
-			<Text style={styles.text}>{title}</Text>
+		<TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+			<Text style={[styles.text, {color: colors[color]}]}>{title}</Text>
 		</TouchableOpacity>
 	);
 }
@@ -25,21 +26,23 @@ import colors from '../config/colors';
 // Style the Components.
 const styles = StyleSheet.create({
 	button: {
-		// width: '100%',
-		borderRadius: 10,
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: 10,
-		margin: 15,
-		marginVertical: 10,
+		//borderRadius: 10,
+		// justifyContent: 'center',
+		//alignItems: 'baseline',
+		padding: 5,
+		//margin: 5,
+		//backgroundColor: colors.light,
+		//marginVertical: 10,
+		marginHorizontal: 15,
+		//alignSelf: 'flex-end'
 	},
 	text: {
-		color: colors.light,
-		fontSize: 18,
+		fontSize: 15,
 		fontWeight: 'bold',
+		//alignSelf: 'center',
 	},
 })
 
 
 // Export the Component.
-export default Button;
+export default Link;

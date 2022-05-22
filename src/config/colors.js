@@ -8,7 +8,7 @@
 */
 export default {
 	primary: '#E31B23',
-	secondary: '#79181D',
+	secondary: '#b30000',
 	black: '#000',
 	white: '#fff',
 	dark: '#333',

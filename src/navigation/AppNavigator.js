@@ -25,13 +25,22 @@ function AppNavigator(){
 	return(
 		<NavigationContainer>
 			<Stack.Navigator
-				initialRouteName="CampusFinder"
+				initialRouteName="Auth"
 				screenOptions={{
 					headerShown: false,
 					animation: 'slide_from_bottom',
 				}}
 			>
 				<Stack.Screen name="Main" component={TabNavigator}/>
+				<Stack.Screen
+					name="Auth"
+					component={AuthNavigator}
+					// options={{
+					// 	presentation: 'modal',
+					// 	headerShown: Platform.OS === 'android' ? true : false,
+					// 	headerTitle: "Select a Campus",
+					// }}
+				/>
 				<Stack.Screen
 					name="Modal"
 					component={CampusPickerScreen}
