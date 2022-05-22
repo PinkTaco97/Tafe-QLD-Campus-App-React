@@ -13,6 +13,7 @@ import {
 	TouchableOpacity,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 // Import Config Settings.
 import colors from '../config/colors';
@@ -24,6 +25,8 @@ import Link from './Link';
 // Render the Login Form Component.
 function LoginForm() {
 
+	const navigation = useNavigation();
+
 	// The Email Adress of the User.
 	const [email, setEmail] = useState('');
 
@@ -33,32 +36,48 @@ function LoginForm() {
     return ( 
 		<View style={styles.container}>
 			<View style={styles.form}>
-				<TextInput
-					style={styles.input}
-					placeholder='Email Address'
-					value={email}
-					onChangeText={text => setEmail(text)}
-					autoCapitalize="none"
-				/>
-				<TextInput
-					style={styles.input}
-					placeholder='Password'
-					value={password}
-					onChangeText={text => setPassword(text)}
-					autoCapitalize="none"
-					secureTextEntry
-				/>
+				<View style={styles.input}>
+					<FontAwesome
+						name="at"
+						style={styles.icon}
+						size={20}
+						color={colors.dark}
+					/>
+					<TextInput
+						style={styles.textInput}
+						placeholder='Email Address'
+						value={email}
+						onChangeText={text => setEmail(text)}
+						autoCapitalize="none"
+					/>
+				</View>
+				<View style={styles.input}>
+					<FontAwesome
+						name="lock"
+						style={styles.icon}
+						size={20}
+						color={colors.dark}
+					/>
+					<TextInput
+						style={styles.textInput}
+						placeholder='Password'
+						value={password}
+						onChangeText={text => setPassword(text)}
+						autoCapitalize="none"
+						secureTextEntry
+					/>
+				</View>
 				<Link
 					title="Forgot Password?"
 					style={styles.forgotPasswordLink}
-					onPress={() => Alert.alert('Message','Forgot Password!')}
+					onPress={() => navigation.navigate('ForgotPassword')}
 				/>
-				<Button title="Login" onPress={() => Alert.alert('Email:',email)}/>
+				<Button title="Login" onPress={() => navigation.navigate('Main')}/>
 				<Text style={styles.label}>Don't have an account?</Text>
 				<Link
 					title="Register"
 					style={styles.registerLink}
-					onPress={() => Alert.alert('Message','Register Here')}
+					onPress={() => navigation.navigate('Register')}
 				/>
 				{/* <Button title="Create an Account" onPress={() => Alert.alert('Password:',password)} color='secondary' ></Button> */}
 			</View>
@@ -82,21 +101,38 @@ const styles = StyleSheet.create({
 		padding: 5,
 		justifyContent: 'center',
 	},
-	input: {
-		color: colors.dark,
-		backgroundColor: colors.light,
-		padding: 10,
+	input:{
+		// flex: 1,
+		flexDirection:'row',
+		// marginTop:10,
+		// paddingBottom:5,
+		justifyContent: 'center',
 		marginHorizontal: 15,
 		marginVertical:10,
-		borderRadius: 10,
+		//
+		borderBottomColor: colors.light,
+		borderBottomWidth: 2,
+		
+	},
+	icon:{
+		alignSelf: 'center',
+		padding: 5,
+		width: 30,
+	},
+	textInput: {
+		flex:1,
+		color: colors.dark,
+		padding: 10,
+
+		//ALT Style:
+		// backgroundColor: colors.light,
+		// marginHorizontal: 15,
+		// marginVertical:10,
+		// borderRadius: 10,
 	},
 	label: {
-		//backgroundColor: colors.light,
 		color: colors.dark,
-		// padding: 10,
-		// marginHorizontal: 15,
 		fontSize: 15,
-		//textAlignVertical: 'center',
 		alignSelf: 'center',
 	},
 	forgotPasswordLink: {

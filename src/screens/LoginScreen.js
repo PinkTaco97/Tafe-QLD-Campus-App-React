@@ -2,6 +2,7 @@
 import React from 'react';
 import {
 	Image,
+	ImageBackground,
 	Dimensions,
 	StyleSheet,
 	View,
@@ -13,17 +14,32 @@ import colors from '../config/colors';
 
 // Import UI Components.
 import Header from '../components/Header';
+import Link from '../components/Link';
 import LoginForm from '../components/LoginForm';
 
 // Render the Login Screen.
 function LoginScreen({ navigation }) {
+
+	// Reference to the Screens Background Image.
+	const backgroundImage = require('../assets/background.jpg');
+
     return (
 		<SafeAreaView style={styles.container}>
-			<View style={styles.contentWrapper}>
-				<Header title="Login"/>
+			<ImageBackground
+				style={styles.contentWrapper}
+				source={backgroundImage}
+			>
+				{/* <View style={styles.header}>
+					<Link
+						title="Later"
+						style={styles.laterLink}
+						onPress={() => navigation.navigate('Main')}
+					/>
+				</View> */}
+				{/* <Header title="Login"/> */}
 				<Image style={styles.logo} source={require('../assets/logo.png')}/>
 				<LoginForm/>
-			</View>
+			</ImageBackground>
 		</SafeAreaView>
     );
 }
@@ -39,6 +55,17 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.light,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	header: {
+		width: '100%',
+		height: 75,
+		position: 'absolute',
+		backgroundColor: colors.white,
+		top: 0,
+	},
+	laterLink: {
+		alignSelf: 'flex-end',
+		height: '100%',
 	},
 	logo: {
 		width: 200,

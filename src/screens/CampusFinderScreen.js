@@ -82,6 +82,10 @@ function CampusFinderScreen({ navigation }) {
 						longitudeDelta: 0.1,
 					}}
 					showsUserLocation={true}
+					showsMyLocationButton={true}
+					loadingEnabled={true}
+                    showsPointsOfInterest={false}
+                    showsCompass={true}
 				>
 					<Marker
 						coordinate={{

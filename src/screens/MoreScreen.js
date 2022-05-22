@@ -77,7 +77,12 @@ function MoreScreen({ navigation }) {
 						<Space height={10}/>
 					}
 					ListHeaderComponent={() =>
-						<Space height={10}/>
+						// <Space height={10}/>
+						<SettingsItem
+							title='Login'
+							icon={'user'}
+							onPress={() => navigation.navigate('Auth')}
+						/>
 					}
 					ListFooterComponent={() =>
 						<Space height={55}/>

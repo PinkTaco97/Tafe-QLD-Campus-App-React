@@ -13,12 +13,12 @@ import colors from '../config/colors';
 // Import UI Components.
 import Header from '../components/Header';
 
-// Render the Register Screen.
-function RegisterScreen({ navigation }) {
+// Render the Forgot Password Screen.
+function ForgotPasswordScreen({ navigation }) {
     return (
 		<View>
 			<Header
-				title="Register"
+				title="Forgot Password"
 				back={true}
 				onBack={() => {navigation.navigate("Login");}}
 			/>
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default RegisterScreen;
+export default ForgotPasswordScreen;

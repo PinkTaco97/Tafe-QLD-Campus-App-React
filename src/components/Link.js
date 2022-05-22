@@ -17,7 +17,7 @@ import colors from '../config/colors';
  */
  function Link({title, color = 'primary', onPress, style}) {
 	return (
-		<TouchableOpacity style={[styles.button, style]} onPress={onPress}>
+		<TouchableOpacity style={[styles.container, style]} onPress={onPress}>
 			<Text style={[styles.text, {color: colors[color]}]}>{title}</Text>
 		</TouchableOpacity>
 	);
@@ -25,21 +25,22 @@ import colors from '../config/colors';
 
 // Style the Components.
 const styles = StyleSheet.create({
-	button: {
-		//borderRadius: 10,
-		// justifyContent: 'center',
-		//alignItems: 'baseline',
+	container: {
+		// flex: 1,
 		padding: 5,
-		//margin: 5,
-		//backgroundColor: colors.light,
-		//marginVertical: 10,
 		marginHorizontal: 15,
+		//borderRadius: 10,
+		justifyContent: 'center',
+		//alignItems: 'baseline',
+		//margin: 5,
+		// backgroundColor: colors.light,
+		//marginVertical: 10,
 		//alignSelf: 'flex-end'
 	},
 	text: {
 		fontSize: 15,
 		fontWeight: 'bold',
-		//alignSelf: 'center',
+		alignSelf: 'center',
 	},
 })
 
