@@ -13,4 +13,5 @@ export default {
 	white: '#fff',
 	dark: '#333',
 	light: '#eee',
+	locationMarker: '#0080ff',
 }

@@ -77,7 +77,7 @@ function RestaurantScreen({ navigation }) {
 			<View style={styles.contentWrapper}>
 				<Header title="Restaurant"/>
 				{restaurants.length === 0 ?
-					<Text style={styles.message}>This Campus dosn't have a Menu.</Text> :
+					<Text style={styles.message}>This Campus dosn't have any Facilities.</Text> :
 					<></>
 				}
 				<FlatList

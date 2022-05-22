@@ -48,7 +48,7 @@ function TabNavigator(){
 				name="SDGTab"
 				component={SDGNavigator}
 				options={{
-					tabBarLabel: "SDG",
+					tabBarLabel: "Sustainability",
 					tabBarIcon: ({size, color}) => (
 						<FontAwesome name="globe" size={size} color={color}/>
 					),
@@ -69,9 +69,9 @@ function TabNavigator(){
 				name="FoodTab"
 				component={FoodNavigator}
 				options={{
-					tabBarLabel: "Food",
+					tabBarLabel: "Facilites",
 					tabBarIcon: ({size, color}) => (
-						<FontAwesome name="cutlery" size={size} color={color}/>
+						<FontAwesome name="building-o" size={size} color={color}/>
 					),
 				}}
 			/>

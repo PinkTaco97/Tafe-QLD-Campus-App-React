@@ -25,7 +25,7 @@ function AppNavigator(){
 	return(
 		<NavigationContainer>
 			<Stack.Navigator
-				initialRouteName="Main"
+				initialRouteName="CampusFinder"
 				screenOptions={{
 					headerShown: false,
 					animation: 'slide_from_bottom',
