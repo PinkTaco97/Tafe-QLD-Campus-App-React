@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import {
 	Alert,
-	KeyboardAvoidingView,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -18,65 +17,61 @@ import colors from '../config/colors';
 import Button from './Button';
 import Link from './Link';
 
-// Render the Login Form Component.
-function LoginForm() {
+// Render the Register Form Component.
+function RegisterForm() {
 
 	// Reference to the Navigator.
 	const navigation = useNavigation();
 
+	// The Name of the User.
+	const [name, setName] = useState('');
+
 	// The Email Adress of the User.
 	const [email, setEmail] = useState('');
-
-	// Whether the Email is Valid.
-	const [emailValid, setEmailValid] = useState(true);
 
 	// The Password of the User.
 	const [password, setPassword] = useState('');
 
-	// Whether the Password is Valid.
-	const [passwordValid, setPasswordValid] = useState(true);
+	// The Confirm Password of the User.
+	const [confirmPassword, setConfirmPassword] = useState('');
 
 	// Validate the Data in the Login Form.
 	function ValidateForm(){
 
 		// Validate the Form Data.
-		if(email.length == 0){
-			Alert.alert("Error", "Please enter your email.");
-			setEmailValid(false);
-			return;
-		}
-		if(!email.includes('@') || !email.includes('.com')){
-			Alert.alert("Error", "Please enter a valid email.");
-			setEmailValid(false);
-			return;}
-		if(password.length == 0){
-			Alert.alert("Error", "Please enter your password.");
-			setEmailValid(true);
-			setPasswordValid(false);
-			return;
-		}
-		if(password.length < 6){
-			Alert.alert("Error", "Password must be atleast 6 characters long.");
-			setEmailValid(true);
-			setPasswordValid(false);
-			return;
-		}
+		if(name.length == 0){Alert.alert("Error", "Please enter your name.");return;}
+		if(email.length == 0){Alert.alert("Error", "Please enter your email.");return;}
+		if(!email.includes('@') || !email.includes('.com')){Alert.alert("Error", "Please enter a valid email.");return;}
+		if(password.length == 0){Alert.alert("Error", "Please enter your password.");return;}
+		if(password.length < 6){Alert.alert("Error", "Password must be atleast 6 characters long.");return;}
+		if(confirmPassword.length == 0){Alert.alert("Error", "Please confirm your password.");return;}
+		if(password !== confirmPassword){Alert.alert("Error", "Passwords don't match!");return;}
 
 		// TODO: Hash User Password.
-		// TODO: Send Email & Password to Server.
-		Alert.alert("Welcome");
-		setEmail('');
-		setEmailValid(true);
-		setPassword('');
-		setPasswordValid(true);
+		// TODO: Send Form Data to Server.
 	}
 
     return ( 
-		<KeyboardAvoidingView style={styles.container}>
+		<View style={styles.container}>
 			<View style={styles.form}>
-				<Text style={styles.title}>Welcome</Text>
-				<Text style={styles.description}>Please login with your credentials.</Text>
-				<View style={[styles.input, emailValid ? styles.inputValid : styles.inputInvalid]}>
+				<Text style={styles.title}>Register</Text>
+				{/* <Text style={styles.description}>This account is seperate from your Tafe QLD identity.</Text> */}
+				<View style={styles.input}>
+					<FontAwesome
+						name="user"
+						style={styles.icon}
+						size={20}
+						color={colors.dark}
+					/>
+					<TextInput
+						style={styles.textInput}
+						placeholder='Name'
+						value={name}
+						onChangeText={text => setName(text)}
+						autoCapitalize="none"
+					/>
+				</View>
+				<View style={styles.input}>
 					<FontAwesome
 						name="at"
 						style={styles.icon}
@@ -86,13 +81,12 @@ function LoginForm() {
 					<TextInput
 						style={styles.textInput}
 						placeholder='Email Address'
-						placeholderTextColor={colors.dark}
 						value={email}
 						onChangeText={text => setEmail(text)}
 						autoCapitalize="none"
 					/>
 				</View>
-				<View style={[styles.input, passwordValid ? styles.inputValid : styles.inputInvalid]}>
+				<View style={styles.input}>
 					<FontAwesome
 						name="lock"
 						style={styles.icon}
@@ -102,27 +96,37 @@ function LoginForm() {
 					<TextInput
 						style={styles.textInput}
 						placeholder='Password'
-						placeholderTextColor={colors.dark}
 						value={password}
 						onChangeText={text => setPassword(text)}
 						autoCapitalize="none"
 						secureTextEntry
 					/>
 				</View>
+				<View style={styles.input}>
+					<FontAwesome
+						name="lock"
+						style={styles.icon}
+						size={20}
+						color={colors.dark}
+					/>
+					<TextInput
+						style={styles.textInput}
+						placeholder='Confirm Password'
+						value={confirmPassword}
+						onChangeText={text => setConfirmPassword(text)}
+						autoCapitalize="none"
+						secureTextEntry
+					/>
+				</View>
+				<Button title="Register" onPress={() => ValidateForm()}/>
+				<Text style={styles.label}>Already have an account?</Text>
 				<Link
-					title="Forgot Password?"
-					style={styles.forgotPasswordLink}
-					onPress={() => navigation.navigate('ForgotPassword')}
-				/>
-				<Button title="Login" onPress={() => ValidateForm()}/>
-				<Text style={styles.label}>Don't have an account?</Text>
-				<Link
-					title="Register"
+					title="Login"
 					style={styles.registerLink}
-					onPress={() => navigation.navigate('Register')}
+					onPress={() => navigation.navigate('Login')}
 				/>
 			</View>
-		</KeyboardAvoidingView>
+		</View>
     );
 }
 
@@ -158,14 +162,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		marginHorizontal: 15,
 		marginVertical:10,
-		//borderBottomColor: colors.light,
-		borderBottomWidth: 2,
-	},
-	inputValid:{
 		borderBottomColor: colors.light,
-	},
-	inputInvalid:{
-		borderBottomColor: colors.primary,
+		borderBottomWidth: 2,
 	},
 	icon:{
 		alignSelf: 'center',
@@ -190,7 +188,6 @@ const styles = StyleSheet.create({
 	},
 	forgotPasswordLink: {
 		alignSelf: 'flex-end',
-		marginHorizontal: 15,
 	},
 	registerLink: {
 		alignSelf: 'center',
@@ -198,4 +195,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default LoginForm;
+export default RegisterForm;

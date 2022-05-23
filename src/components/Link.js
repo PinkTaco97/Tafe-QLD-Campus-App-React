@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 	container: {
 		// flex: 1,
 		padding: 5,
-		marginHorizontal: 15,
+		// marginHorizontal: 15,
 		//borderRadius: 10,
 		justifyContent: 'center',
 		//alignItems: 'baseline',

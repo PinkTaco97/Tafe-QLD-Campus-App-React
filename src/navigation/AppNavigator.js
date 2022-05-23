@@ -72,7 +72,7 @@ function AppNavigator(){
 					component={WebViewScreen}
 					options={{
 						presentation: 'modal',
-						headerShown: Platform.OS === 'android' ? true : false,
+						// headerShown: Platform.OS === 'android' ? true : false,
 						headerTitle: "WebView",
 					}}
 				/>

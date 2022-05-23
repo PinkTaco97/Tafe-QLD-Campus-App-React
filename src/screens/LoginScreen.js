@@ -3,10 +3,9 @@ import React from 'react';
 import {
 	Image,
 	ImageBackground,
-	Dimensions,
+	SafeAreaView,
 	StyleSheet,
 	View,
-	SafeAreaView,
 } from 'react-native';
 
 // Import Config Settings.
@@ -15,6 +14,7 @@ import colors from '../config/colors';
 // Import UI Components.
 import Header from '../components/Header';
 import Link from '../components/Link';
+import Space from '../components/Space';
 import LoginForm from '../components/LoginForm';
 
 // Render the Login Screen.
@@ -27,16 +27,25 @@ function LoginScreen({ navigation }) {
 		<SafeAreaView style={styles.container}>
 			<ImageBackground
 				style={styles.contentWrapper}
-				source={backgroundImage}
+				// source={backgroundImage}
 			>
 				{/* <View style={styles.header}>
 					<Link
 						title="Later"
+						color="white"
 						style={styles.laterLink}
 						onPress={() => navigation.navigate('Main')}
 					/>
 				</View> */}
-				{/* <Header title="Login"/> */}
+				<Header
+					style={styles.header}
+					color="white"
+					rightLink={true}
+					rightLinkText="Later"
+					rightLinkColor="white"
+					onRightLink={() => navigation.navigate('Main')}
+				/>
+				{/* <Space height={60}/> */}
 				<Image style={styles.logo} source={require('../assets/logo.png')}/>
 				<LoginForm/>
 			</ImageBackground>
@@ -48,7 +57,7 @@ function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: colors.primary,
+		backgroundColor: colors.light,
 	},
 	contentWrapper: {
 		flex: 1,
@@ -57,10 +66,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	header: {
-		width: '100%',
-		height: 75,
 		position: 'absolute',
-		backgroundColor: colors.white,
 		top: 0,
 	},
 	laterLink: {
