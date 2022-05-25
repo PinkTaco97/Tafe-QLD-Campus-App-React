@@ -19,23 +19,24 @@ function Header({
 	title,
 	color = 'primary',
 	style,
-	leftLink=false,
+	leftLink = false,
 	leftLinkText,
 	onLeftLink,
-	rightLink=false,
+	rightLink = false,
 	rightLinkText,
 	rightLinkColor,
 	onRightLink,
-	back=false,
+	back = false,
+	backColor = 'white',
 	onBack,
 	
 	}) {
     return ( 
-		<View style={[styles.container, style, {color: colors[color]}]}>
+		<View style={[styles.container, style, {backgroundColor: colors[color]}]}>
 			{
 				back ?
 					<TouchableOpacity style={styles.backButton} onPress={onBack}>
-						<FontAwesome name="arrow-left" size={30} color={colors.white}/>
+						<FontAwesome name="arrow-left" size={30} color={colors[backColor]}/>
 					</TouchableOpacity>
 				:
 					<></>

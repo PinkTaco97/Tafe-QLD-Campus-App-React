@@ -75,7 +75,7 @@ function RestaurantScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
 			<View style={styles.contentWrapper}>
-				<Header title="Restaurant"/>
+				<Header title="Facilities"/>
 				{restaurants.length === 0 ?
 					<Text style={styles.message}>This Campus dosn't have any Facilities.</Text> :
 					<></>

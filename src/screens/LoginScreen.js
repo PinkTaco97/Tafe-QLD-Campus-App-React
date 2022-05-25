@@ -39,7 +39,7 @@ function LoginScreen({ navigation }) {
 				</View> */}
 				<Header
 					style={styles.header}
-					color="white"
+					color="primary"
 					rightLink={true}
 					rightLinkText="Later"
 					rightLinkColor="white"

@@ -55,7 +55,7 @@ function RegisterForm() {
 		<View style={styles.container}>
 			<View style={styles.form}>
 				<Text style={styles.title}>Register</Text>
-				{/* <Text style={styles.description}>This account is seperate from your Tafe QLD identity.</Text> */}
+				<Text style={styles.description}>This account is seperate from your Tafe QLD identity.</Text>
 				<View style={styles.input}>
 					<FontAwesome
 						name="user"
