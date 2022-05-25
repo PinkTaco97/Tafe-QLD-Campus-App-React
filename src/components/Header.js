@@ -70,10 +70,14 @@ const styles = StyleSheet.create({
 	title: {
 		color: colors.white,
 		// backgroundColor: colors.light,
+		// position: 'absolute',
+		// top: 0,
 		fontSize: 30,
 		fontWeight: 'bold',
-		height: 75,
-		lineHeight: 75,
+		height: 50,
+		lineHeight: 40,
+		overflow: 'visible',
+		textAlignVertical: 'center',
 	},
 	backButton: {
 		position: 'absolute',

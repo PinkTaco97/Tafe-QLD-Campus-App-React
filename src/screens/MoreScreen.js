@@ -81,7 +81,7 @@ function MoreScreen({ navigation }) {
 						<SettingsItem
 							title='Login'
 							icon={'user'}
-							onPress={() => navigation.navigate('Info', '8102863219225828282')}
+							onPress={() => navigation.navigate('Auth')}
 						/>
 					}
 					ListFooterComponent={() =>

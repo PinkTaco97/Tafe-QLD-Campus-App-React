@@ -12,12 +12,14 @@ import colors from '../config/colors';
 
 // Import UI Components.
 import Header from '../components/Header';
+import OnBoardingForm from '../components/OnBoardingForm';
 
 // Render the About You Screen.
 function AboutYouScreen() {
     return (
 		<View>
-			<Header title="About You"/>
+			<Header title="Welcome"/>
+			<OnBoardingForm/>
 		</View>
     );
 }

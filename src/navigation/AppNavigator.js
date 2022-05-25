@@ -20,6 +20,7 @@ import AuthNavigator from './AuthNavigator';
 import ModalScreen from '../screens/ModalScreen';
 import CampusPickerScreen from '../screens/CampusPickerScreen';
 import WebViewScreen from '../screens/WebViewScreen';
+import AboutYouScreen from '../screens/AboutYouScreen';
 
 // Import UI Components.
 import Link from '../components/Link';
@@ -32,7 +33,7 @@ function AppNavigator(){
 	return(
 		<NavigationContainer>
 			<Stack.Navigator
-				initialRouteName="Main"
+				initialRouteName="AboutYou"
 				screenOptions={{
 					headerShown: false,
 					animation: 'slide_from_bottom',
@@ -75,6 +76,10 @@ function AppNavigator(){
 						headerShown: Platform.OS === 'android' ? true : false,
 						headerTitle: "WebView",
 					}}
+				/>
+				<Stack.Screen
+					name="AboutYou"
+					component={AboutYouScreen}
 				/>
       		</Stack.Navigator>
 		</NavigationContainer>

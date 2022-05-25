@@ -106,6 +106,7 @@ function CampusPickerScreen({navigation, props}) {
 			<Picker
 				selectedValue={selectedRegion}
 				style={styles.picker}
+				itemStyle={styles.pickerItem}
 				onValueChange={(itemValue, itemIndex) => {
 					console.log("Selected Region: " + itemValue);
 					setSelectedRegion(itemValue);
