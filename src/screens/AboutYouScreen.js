@@ -1,8 +1,6 @@
 // Import Thrid Party Libraies.
 import React from 'react';
 import {
-	Image,
-	Dimensions,
 	StyleSheet,
 	View,
 } from 'react-native';

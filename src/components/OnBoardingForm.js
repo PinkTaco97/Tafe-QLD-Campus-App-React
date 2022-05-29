@@ -4,11 +4,9 @@ import {
 	Alert,
 	StyleSheet,
 	Text,
-	TextInput,
 	View,
 	ScrollView,
 } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import {Picker} from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,13 +14,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Import Config Settings.
 import colors from '../config/colors';
 
-// Import API Components.
+// Import API Layers.
 import campusAPI from '../api/campus';
 import profileAPI from '../api/profile';
 
 // Import UI Compnents.
 import Button from './Button';
-import Link from './Link';
 import Space from './Space';
 
 // Render the On Boarding Form Component.
@@ -56,21 +53,25 @@ function OnBoardingForm() {
 	const [selectedCampus, setSelectedCampus] = useState(0);
 
 	// Called when Componenet is Rendered.
+	// Or when the Selected Region Changes.
 	useEffect(() => {
 		GetRegions();
 	}, [selectedRegion])
 
 	// Get the Campus Regions from the API.
 	const GetRegions = async () => {
+
+		// Get the Respone from the API.
 		const response = await campusAPI.getRegions();
 
 		// If there was an Error.
 		if(!response.ok){
+
 			// Update the Error state.
 			setError(true);
 			
 			// Alert the User that there was an error.
-			alert(response.originalError);
+			Alert.alert("Error", "There was a problem retrieving the list of Regions.");
 
 			// Print the Error to the console.
 			console.log(response.originalError);
@@ -87,14 +88,14 @@ function OnBoardingForm() {
 		}
 	}
 
-	// Get the Campus Regions from the API.
+	// Get all Campuses for a given region from the API.
 	const GetCampuses = async (region) => {
 		
 		// Clear the Campus list.
 		setCampuses([]);
 		
 		// Get Respones from API.
-		const response = await campusAPI.getCampuses(region);
+		const response = await campusAPI.getCampusesByRegion(region);
 
 		// If there was an Error.
 		if(!response.ok){
@@ -103,17 +104,17 @@ function OnBoardingForm() {
 			setError(true);
 			
 			// Alert the User that there was an error.
-			alert(response.originalError);
+			Alert.alert("Error", "There was a problem retrieving the list of Campuses.");
 
 			// Print the Error to the console.
 			console.log(response.originalError);
 		}
 		else{
-			// Save the list of Campuses.
-			setCampuses(response.data)
-
 			// Update the Error state.
 			setError(false);
+
+			// Save the list of Campuses.
+			setCampuses(response.data);
 		}
 	}
 
@@ -130,7 +131,7 @@ function OnBoardingForm() {
 			setError(true);
 			
 			// Alert the User that there was an error.
-			alert(response.originalError);
+			Alert.alert(response.originalError);
 
 			// Print the Error to the console.
 			console.log(response.data);
@@ -241,8 +242,6 @@ function OnBoardingForm() {
 const styles = StyleSheet.create({
 	container: {
 		width: '100%',
-		// alignItems: 'center',
-		// justifyContent: 'center',
 		padding: 15,
 	},
 	form: {

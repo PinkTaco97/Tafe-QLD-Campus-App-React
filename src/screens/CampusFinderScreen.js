@@ -1,42 +1,32 @@
 // Import Thrid Party Libraies.
 import React, { useState, useEffect } from 'react';
 import {
-	Image,
 	Dimensions,
 	StyleSheet,
-	Text,
 	View,
 	SafeAreaView,
 } from 'react-native';
 import MapView, { Callout, Marker } from 'react-native-maps';
 import { FontAwesome } from '@expo/vector-icons';
-import ImageZoom from 'react-native-image-pan-zoom';
 
 // Import Config Settings.
 import colors from '../config/colors';
 
-// Import API Components.
+// Import API Layers.
 import campusApi from '../api/campus';
 
 // Import UI Components.
 import Header from '../components/Header';
 import CampusCallout from '../components/CampusCallout';
 
-const test = [
-	{
-		'latitude': "-27.853249",
-		'longitude': "153.321111",
-	}
-]
-
 // Render the Campus Finder Screen.
 function CampusFinderScreen({ navigation }) {
 
-	// The Campus List loaded from the Database.
-	const [campuses, setCampuses] = useState([]);
-
 	// Whether there was an error. 
 	const [error, setError] = useState(false);
+
+	// The Campuses loaded from the Database.
+	const [campuses, setCampuses] = useState([]);
 
 	useEffect(() => {
 		GetCampuses();
@@ -53,15 +43,22 @@ function CampusFinderScreen({ navigation }) {
 
 		// If there was an Error.
 		if(!response.ok){
-			//alert(response.problem);
-			console.log(response.originalError);
+
+			// Update the Error state.
 			setError(true);
-			return (<></>);
+
+			// Alert the User that there was an error.
+			Alert.alert("Error", "There was a problem retrieving the Campus Locations.");
+
+			// Print the Error to the console.
+			console.log(response.originalError);
 		}
 		else{
-			//console.log(response.data);
-			setCampuses(response.data)
+			// Update the Error state.
 			setError(false);
+
+			// Save the list of Campuses.
+			setCampuses(response.data);
 		}
 	}
 
@@ -87,6 +84,7 @@ function CampusFinderScreen({ navigation }) {
                     showsPointsOfInterest={false}
                     showsCompass={true}
 				>
+					{/* Show a Custom Marker for user Location.
 					<Marker
 						coordinate={{
 							latitude: -27.833550,
@@ -97,7 +95,7 @@ function CampusFinderScreen({ navigation }) {
 						<Callout>
 							<Text style={{width: 100}}>Your Location</Text>
 						</Callout>
-					</Marker>
+					</Marker> */}
 					{campuses.map((campus) => <Marker
 						key={campus.id}
 						coordinate={{
@@ -111,33 +109,9 @@ function CampusFinderScreen({ navigation }) {
 								name={campus.name}
 								imageURL={campus.phone}
 							/>
-							{/* <Text>{campus.name}</Text> */}
 						</Callout>
 					</Marker>)}
-					
-					
-					{/* <Marker
-						coordinate={{
-							latitude: -28.0725088,
-							longitude: 153.3788099,
-						}}
-					>
-						<Callout>
-							<Text>Robina Campus</Text>
-						</Callout>
-					</Marker> */}
 				</MapView>
-				{/* <ImageZoom
-					cropWidth={Dimensions.get('window').width}
-					cropHeight={Dimensions.get('window').height}
-					imageWidth={962}
-					imageHeight={1171}
-				>
-					<Image
-						style={{width:962, height:1171}}
-						source={image}
-					/>
-				</ImageZoom> */}
 			</View>
 		</SafeAreaView>
     );

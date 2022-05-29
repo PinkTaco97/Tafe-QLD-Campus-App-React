@@ -1,8 +1,7 @@
 // Import Thrid Party Libraies.
 import React, { useState, useEffect } from 'react';
 import {
-	Image,
-	Dimensions,
+	Alert,
 	StyleSheet,
 	Text,
 	View,
@@ -13,11 +12,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Import Config Settings.
 import colors from '../config/colors';
 
-// Import API Components.
-import campusApi from '../api/campus';
+// Import API Layers.
+import campusAPI from '../api/campus';
 
 // Import UI Components.
-import Header from '../components/Header';
 import Button from '../components/Button';
 
 // Render the Map Screen.
@@ -38,30 +36,38 @@ function CampusPickerScreen({navigation, props}) {
 	// The Selected Campus.
 	const [selectedCampus, setSelectedCampus] = useState(0);
 
-	// The Selected Campuses Name.
-	//const [selectedCampusName, setSelectedCampusName] = useState(null);
-
 	// Called when Componenet is Rendered.
+	// Or when the Selected Region Changes.
 	useEffect(() => {
 		GetRegions();
-		GetCampuses(selectedRegion);
 	}, [selectedRegion])
 
 	// Get the Campus Regions from the API.
 	const GetRegions = async () => {
-		const response = await campusApi.getRegions();
+		
+		// Get the Respone from the API.
+		const response = await campusAPI.getRegions();
 
 		// If there was an Error.
 		if(!response.ok){
-			//alert(response.problem);
-			//console.log(response.problem);
+			// Update the Error state.
 			setError(true);
-			return (<></>);
+
+			// Alert the User that there was an error.
+			Alert.alert("Error", "There was a problem retrieving the list of Regions.");
+
+			// Print the Error to the console.
+			console.log(response.originalError);
 		}
 		else{
-			//console.log(response.data);
-			setRegions(response.data)
+			// Update the Error state.
 			setError(false);
+
+			// Save the list of Regions.
+			setRegions(response.data)
+
+			// Get the list of Campuses.
+			GetCampuses(selectedRegion);
 		}
 	}
 
@@ -71,63 +77,71 @@ function CampusPickerScreen({navigation, props}) {
 		// Clear the Campus list.
 		setCampuses([]);
 		
-		// Get Respones from API.
-		const response = await campusApi.getCampuses(region);
+		// Get the Respone from the API.
+		const response = await campusAPI.getCampusesByRegion(region);
 
 		// If there was an Error.
 		if(!response.ok){
-			//alert(response.problem);
-			console.log(response.originalError);
+			// Update the Error state.
 			setError(true);
-			return (<></>);
+
+			// Alert the User that there was an error.
+			Alert.alert("Error", "There was a problem retrieving the list of Campuses.");
+			
+			// Print the Error to the console.
+			console.log(response.originalError);
 		}
 		else{
-			//console.log(response.data);
-			setCampuses(response.data)
+			// Update the Error state.
 			setError(false);
+
+			// Save the list of Campuses.
+			setCampuses(response.data);
 		}
 	}
 
 	// Save the Selected Campus to the Device.
 	const UpdateCampus = async () => {
 		try {
+			// Save the New Selected Campus to the Local Storage.
 			await AsyncStorage.setItem('@selected_campus', selectedCampus.toString())
-			alert("Updated your Campus!");
+			
+			// Alert the User that their Campus was Updated.
+			Alert.alert("Success", "Updated your Campus!");
+
+			// Redirect the User to the More Screen.
 			navigation.navigate("More");
+		
+		// If there was an Error.
 		} catch (e) {
-			alert("There was an error updating your Campus." + e);
+			// Alert the User that there was an error.
+			Alert.alert("Error", "There was an problem updating your Campus.");
+
+			// Print the Error to the console.
+			console.log(e);
 		}
 	}
 
     return (
 		<View style={styles.container}>
-			{/* <Header title="Campus Picker"/> */}
 			<Text style={styles.heading}>Select a Region:</Text>
 			<Picker
 				selectedValue={selectedRegion}
 				style={styles.picker}
 				itemStyle={styles.pickerItem}
-				onValueChange={(itemValue, itemIndex) => {
-					console.log("Selected Region: " + itemValue);
-					setSelectedRegion(itemValue);
-				}}
+				onValueChange={(itemValue) => setSelectedRegion(itemValue)}
 			>
-				{/* <Picker.Item label="Select Region" value={-1} key={-1} /> */}
 				{regions.map(region => <Picker.Item label={region.name} value={region.id} key={region.id}/>)}
 			</Picker>
 			<Text style={styles.heading}>Select a Campus:</Text>
 			<Picker
 				selectedValue={selectedCampus}
 				style={styles.picker}
-				onValueChange={(itemValue, itemIndex) => {
-					console.log("Selected Campus: " + itemValue);
-					setSelectedCampus(itemValue);
-				}}
+				onValueChange={(itemValue) => setSelectedCampus(itemValue)}
 			>
-				{/* <Picker.Item label="Select Campus" value={-1} key={-1} /> */}
 				{campuses.map(campus => <Picker.Item label={campus.name} value={campus.id} key={campus.id} />)}
 			</Picker>
-			<Button title="Update Campus" onPress={() => UpdateCampus()}/>
+			<Button title="Save" onPress={() => UpdateCampus()}/>
 		</View>
     );
 }

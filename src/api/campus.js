@@ -8,7 +8,7 @@ import client from './client';
 const getRegions = () => client.get('/region/list');
 
 // Get all the Campuses for a given Region.
-const getCampuses = (regionID) => client.get('/campus/list/'+regionID);
+const getCampusesByRegion = (regionID) => client.get('/campus/list/'+regionID);
 
 // Get all the Campuses.
 const getCampusList = () => client.get('/campus/list');
@@ -16,6 +16,6 @@ const getCampusList = () => client.get('/campus/list');
 // Export the API functions.
 export default {
 	getRegions,
-	getCampuses,
+	getCampusesByRegion,
 	getCampusList,
 };
