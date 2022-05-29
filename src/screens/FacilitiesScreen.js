@@ -16,7 +16,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import colors from '../config/colors';
 
 // Import API Components.
-import restaurantAPI from '../api/restaurant';
+import facilityAPI from '../api/facility';
 
 // Import UI Components.
 import Header from '../components/Header';
@@ -24,20 +24,14 @@ import MenuCategoryItem from '../components/MenuCategoryItem';
 import Space from '../components/Space';
 
 
-// Render the Menu Screen.
-function RestaurantScreen({ navigation }) {
+// Render the Facilities Screen.
+function FacilitiesScreen({ navigation }) {
 
-	// The Categories loaded from the Database.
-	const [restaurants, setRestaurants] = useState([]);
+	// The Facilities loaded from the Database.
+	const [facilities, setFacilities] = useState([]);
 
 	// Whether there was an error. 
 	const [error, setError] = useState(false);
-
-	// Called when Componenet is Rendered.
-	// useEffect(() => {
-	// 	GetSelectedCampus();
-	// 	GetMenuCategories();
-	// }, [selectedCampus])
 
 	// Called when Screen is Focused.
 	useFocusEffect(
@@ -46,29 +40,36 @@ function RestaurantScreen({ navigation }) {
 		}, [])
 	);
 
+	// Load the Selected Campus from Local Storage.
 	const GetSelectedCampus = async () => {
 		try {
-			GetRestaurants(Number(await AsyncStorage.getItem("@selected_campus")));
+			GetFacilities(Number(await AsyncStorage.getItem("@selected_campus")));
 		} catch (e) {
 			alert(e);
 		}
 	}
 
-	// Get the Restaurants from the API.
-	const GetRestaurants = async (campusID) => {
-		const response = await restaurantAPI.getRestaurantsByCampus(campusID);
+	// Get the Facilities from the API.
+	const GetFacilities = async (campusID) => {
+		const response = await facilityAPI.getFacilitiesByCampus(campusID);
 
 		// If there was an Error.
 		if(!response.ok){
-			//alert(response.problem);
-			console.log(response.originalError);
+			// Update the Error state.
 			setError(true);
-			return (<></>);
+
+			// Alert the User that there was an error.
+			alert(response.originalError);
+
+			// Print the Error to the console.
+			console.log(response.originalError);
 		}
 		else{
-			//console.log(response.data);
-			setRestaurants(response.data)
+			// Update the Error state.
 			setError(false);
+
+			// Save the list of Facilities.
+			setFacilities(response.data)
 		}
 	}
 
@@ -76,20 +77,20 @@ function RestaurantScreen({ navigation }) {
         <SafeAreaView style={styles.container}>
 			<View style={styles.contentWrapper}>
 				<Header title="Facilities"/>
-				{restaurants.length === 0 ?
+				{facilities.length === 0 ?
 					<Text style={styles.message}>This Campus dosn't have any Facilities.</Text> :
 					<></>
 				}
 				<FlatList
 					style={styles.scrollView}
-					data={restaurants}
+					data={facilities}
 					// numColumns={2}
-					keyExtractor={restaurant => restaurant.id.toString()}
+					keyExtractor={facility => facility.id.toString()}
 					renderItem={({ item }) =>
 						<MenuCategoryItem
 							name={item.name}
 							imageURL={item.image}
-							onPress={() => navigation.navigate("RestaurantDetails", item)}
+							onPress={() => navigation.navigate("FacilityDetails", item)}
 						/>
 					}
 					ItemSeparatorComponent={() =>
@@ -129,4 +130,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default RestaurantScreen;
+export default FacilitiesScreen;

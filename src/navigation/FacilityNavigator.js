@@ -3,26 +3,26 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Import the Application Screens.
-import RestaurantScreen from '../../src/screens/RestaurantScreen';
-import RestaurantDetailsScreen from '../../src/screens/RestaurantDetailsScreen';
+import FacilitiesScreen from '../../src/screens/FacilitiesScreen';
+import FacilityDetailsScreen from '../../src/screens/FacilityDetailsScreen';
 
 // Create a Native Stack Navigator.
 const Stack = createNativeStackNavigator();
 
-function FoodNavigator(){
+function FacilityNavigator(){
 	return(
 		<Stack.Navigator
-			initialRouteName="Restaurant"
+			initialRouteName="Facilities"
 			screenOptions={{
 				headerShown: false,
 				animation: 'slide_from_right',
 			}}
 		>
-			<Stack.Screen name="Restaurant" component={RestaurantScreen}/>
-			<Stack.Screen name="RestaurantDetails" component={RestaurantDetailsScreen}/>
+			<Stack.Screen name="Facilities" component={FacilitiesScreen}/>
+			<Stack.Screen name="FacilityDetails" component={FacilityDetailsScreen}/>
       	</Stack.Navigator>
 	);
 }
 
 // Export the Component.
-export default FoodNavigator;
+export default FacilityNavigator;

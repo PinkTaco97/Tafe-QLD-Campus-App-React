@@ -15,7 +15,7 @@ import QRScanButton from '../components/QRScanButton';
 import EventNavigator from './EventNavigator';
 import SDGNavigator from './SDGNavigator';
 import QRScanNavigator from './QRScanNavigator';
-import FoodNavigator from './FoodNavigator';
+import FacilityNavigator from './FacilityNavigator';
 import MoreNavigator from './MoreNavigator';
 
 // Create the Navigator
@@ -66,8 +66,8 @@ function TabNavigator(){
 				})}
 			/>
 			<Tab.Screen
-				name="FoodTab"
-				component={FoodNavigator}
+				name="FacilitiesTab"
+				component={FacilityNavigator}
 				options={{
 					tabBarLabel: "Facilites",
 					tabBarIcon: ({size, color}) => (

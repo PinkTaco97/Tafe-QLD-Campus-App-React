@@ -17,7 +17,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../config/colors';
 
 // Import API Components.
-import campusApi from '../api/campus';
+import campusAPI from '../api/campus';
+import profileAPI from '../api/profile';
 
 // Import UI Compnents.
 import Button from './Button';
@@ -46,7 +47,7 @@ function OnBoardingForm() {
 	const [selectedType, setSelectedType] = useState('S');
 
 	// The Selected Industry.
-	const [selectedIndustry, setSelectedIndustry] = useState(0);
+	const [selectedIndustry, setSelectedIndustry] = useState(1);
 
 	// The Selected Region.
 	const [selectedRegion, setSelectedRegion] = useState(0);
@@ -57,24 +58,32 @@ function OnBoardingForm() {
 	// Called when Componenet is Rendered.
 	useEffect(() => {
 		GetRegions();
-		GetCampuses(selectedRegion);
 	}, [selectedRegion])
 
 	// Get the Campus Regions from the API.
 	const GetRegions = async () => {
-		const response = await campusApi.getRegions();
+		const response = await campusAPI.getRegions();
 
 		// If there was an Error.
 		if(!response.ok){
-			//alert(response.problem);
-			//console.log(response.problem);
+			// Update the Error state.
 			setError(true);
-			return (<></>);
+			
+			// Alert the User that there was an error.
+			alert(response.originalError);
+
+			// Print the Error to the console.
+			console.log(response.originalError);
 		}
 		else{
-			//console.log(response.data);
-			setRegions(response.data)
+			// Update the Error state.
 			setError(false);
+
+			// Save the list of Regions.
+			setRegions(response.data)
+
+			// Get the list of Campuses.
+			GetCampuses(selectedRegion);
 		}
 	}
 
@@ -85,25 +94,75 @@ function OnBoardingForm() {
 		setCampuses([]);
 		
 		// Get Respones from API.
-		const response = await campusApi.getCampuses(region);
+		const response = await campusAPI.getCampuses(region);
 
 		// If there was an Error.
 		if(!response.ok){
-			//alert(response.problem);
-			console.log(response.originalError);
+
+			// Update the Error state.
 			setError(true);
-			return (<></>);
+			
+			// Alert the User that there was an error.
+			alert(response.originalError);
+
+			// Print the Error to the console.
+			console.log(response.originalError);
 		}
 		else{
-			//console.log(response.data);
+			// Save the list of Campuses.
 			setCampuses(response.data)
+
+			// Update the Error state.
 			setError(false);
 		}
 	}
 
-	// Validate the Data.
-	function ValidateForm(){
+	// Send the Profile to the API.
+	const PostProfile = async (profile) => {
+		
+		// Get Respone from API.
+		const response = await profileAPI.createProfile(profile);
 
+		// If there was an Error.
+		if(!response.ok){
+
+			// Update the Error state.
+			setError(true);
+			
+			// Alert the User that there was an error.
+			alert(response.originalError);
+
+			// Print the Error to the console.
+			console.log(response.data);
+		}
+		else{
+			// Update the Error state.
+			setError(false);
+
+			// Alert the User that a profile was created.
+			Alert.alert("Profile Created!");
+
+			// Redirect the User to the Main Navigator.
+			navigation.navigate("Main");
+		}
+	}
+
+	// Form Submit Callback
+	function handleSubmit(){
+
+		// Create a Profile object from the Form Data.
+		const profile = {
+			'type': selectedType,
+			'industry': selectedIndustry,
+			'region': selectedRegion,
+			'campus': selectedCampus,
+		}
+
+		// Print the profile Object on the console.
+		console.log(profile);
+
+		// Send the Profile to the API.
+		PostProfile(profile);
 	}
 
     return ( 
@@ -137,15 +196,15 @@ function OnBoardingForm() {
 						setSelectedIndustry(itemValue);
 					}}
 				>
-					<Picker.Item label="Business" value={0} key={0} />
-					<Picker.Item label="Creative Industries" value={1} key={1} />
-					<Picker.Item label="Education & Community" value={2} key={2} />
-					<Picker.Item label="Environment & Animal Services" value={3} key={3} />
-					<Picker.Item label="Health & Science" value={4} key={4} />
-					<Picker.Item label="Information Technology" value={5} key={5} />
-					<Picker.Item label="Infrastructure & Transport" value={6} key={6} />
-					<Picker.Item label="Service Industries" value={7} key={7} />
-					<Picker.Item label="Trades" value={8} key={8} />
+					<Picker.Item label="Business" value={1} key={1} />
+					<Picker.Item label="Creative Industries" value={2} key={2} />
+					<Picker.Item label="Education & Community" value={3} key={3} />
+					<Picker.Item label="Environment & Animal Services" value={4} key={4} />
+					<Picker.Item label="Health & Science" value={5} key={5} />
+					<Picker.Item label="Information Technology" value={6} key={6} />
+					<Picker.Item label="Infrastructure & Transport" value={7} key={7} />
+					<Picker.Item label="Service Industries" value={8} key={8} />
+					<Picker.Item label="Trades" value={9} key={9} />
 				</Picker>
 				<Text style={styles.heading}>My Region:</Text>
 				<Picker
@@ -171,7 +230,7 @@ function OnBoardingForm() {
 				>
 					{campuses.map(campus => <Picker.Item label={campus.name} value={campus.id} key={campus.id} />)}
 				</Picker>
-				<Button title="Continue" onPress={() => navigation.navigate('Main')}/>
+				<Button title="Continue" onPress={() => handleSubmit()}/>
 			</View>
 			<Space height={125}/>
 		</ScrollView>

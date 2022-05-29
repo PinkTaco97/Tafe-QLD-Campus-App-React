@@ -15,40 +15,50 @@ import colors from '../config/colors';
 // Import UI Compponents.
 import Header from '../components/Header';
 import Button from '../components/Button';
-import BackButton from '../components/BackButton';
 import Space from '../components/Space';
-import { Alert } from 'react-native-web';
 
-// Render Restaurant Details Screen.
-function RestaurantDetailsScreen({ navigation, route }) {
+// Render Facility Details Screen.
+function FacilityDetailsScreen({ navigation, route }) {
 
-	// The Restaurant Data passed from the Previous Screen.
-	const restaurant = route.params;
+	// The Facility Data passed from the Previous Screen.
+	const facility = route.params;
 
 	// The Events Image.
-	const image = { uri: restaurant.image }
+	const image = { uri: facility.image }
 
 	// Called when Componenet is Rendered.
 	useEffect(() => {
-		navigation.setOptions({
-			headerTitle: restaurant.name
-		})
+		// Print the Facility Data to the console.
+		//console.log(facility);
+
+		// Set the Title of the Screen.
+		navigation.setOptions({headerTitle: facility.name})
 	}, [])
 
     return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.contentWrapper}>
 				<Header
-					title={restaurant.name}
+					title={facility.name}
 					back={true}
-					onBack={() => {navigation.navigate("Restaurant");}}
+					onBack={() => {navigation.navigate("Facilities");}}
 				/>
 				<ScrollView style={styles.scrollView}>
 					<Image style={styles.image} source={image}/>
-					{/* <Text style={styles.title}>{restaurant.name}</Text> */}
-					<Text style={styles.content}>{restaurant.description}</Text>
-					<Button title="View Menu" onPress={() => navigation.navigate("WebView", restaurant.menuLink)}></Button>
-					<Button title="Book a Table" onPress={() => navigation.navigate("WebView", restaurant.bookingLink)}></Button>
+					{/* <Text style={styles.title}>{facility.name}</Text> */}
+					<Text style={styles.content}>{facility.description}</Text>
+					{
+						facility.menuLink.length != 0 ?
+							<Button title="View Menu" onPress={() => navigation.navigate("WebView", facility.menuLink)}></Button>
+						:
+							<></>
+					}
+					{
+						facility.bookingLink.length != 0 ?
+							<Button title="Book a Table" onPress={() => navigation.navigate("WebView", facility.bookingLink)}></Button>
+						:
+							<></>
+					}
 					<Space height={25}/>
 				</ScrollView>
 			</View>
@@ -123,4 +133,4 @@ const styles = StyleSheet.create({
 })
 
 // Export the Component.
-export default RestaurantDetailsScreen;
+export default FacilityDetailsScreen;

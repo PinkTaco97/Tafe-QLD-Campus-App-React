@@ -33,7 +33,7 @@ function AppNavigator(){
 	return(
 		<NavigationContainer>
 			<Stack.Navigator
-				initialRouteName="AboutYou"
+				initialRouteName="Main"
 				screenOptions={{
 					headerShown: false,
 					animation: 'slide_from_bottom',

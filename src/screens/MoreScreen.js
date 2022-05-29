@@ -78,11 +78,18 @@ function MoreScreen({ navigation }) {
 					}
 					ListHeaderComponent={() =>
 						// <Space height={10}/>
+						//isloggedin ?
 						<SettingsItem
 							title='Login'
 							icon={'user'}
 							onPress={() => navigation.navigate('Auth')}
 						/>
+						//:
+						// <SettingsItem
+						// 	title='Logout'
+						// 	icon={'user'}
+						// 	onPress={() => navigation.navigate('Auth')}
+						// />
 					}
 					ListFooterComponent={() =>
 						<Space height={55}/>
