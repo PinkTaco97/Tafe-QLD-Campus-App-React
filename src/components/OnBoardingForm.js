@@ -1,5 +1,10 @@
 // Import Thrid Party Libraies.
-import React, { useState, useEffect } from 'react';
+import React, {
+	useContext,
+	useEffect,
+	useState,
+	componentDidMount,
+} from 'react';
 import {
 	Alert,
 	StyleSheet,
@@ -13,6 +18,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Import Config Settings.
 import colors from '../config/colors';
+
+// Import Context.
+import ProfileContext from '../context/ProfileContext';
+
+// Import Storage.
+import profileStorage from '../storage/ProfileStorage';
 
 // Import API Layers.
 import campusAPI from '../api/campus';
@@ -30,6 +41,9 @@ function OnBoardingForm() {
 
 	// Whether there was an error. 
 	const [error, setError] = useState(false);
+
+	// Reference to the Users Profile.
+	const profileContext = useContext(ProfileContext);
 
 	// The Industries loaded from the Database.
 	const [industries, setIndustries] = useState([]);
@@ -55,7 +69,7 @@ function OnBoardingForm() {
 	// Called when Componenet is Rendered.
 	// Or when the Selected Region Changes.
 	useEffect(() => {
-		GetRegions();
+	 	GetRegions();
 	}, [selectedRegion])
 
 	// Get the Campus Regions from the API.
@@ -125,28 +139,18 @@ function OnBoardingForm() {
 		const response = await profileAPI.createProfile(profile);
 
 		// If there was an Error.
-		if(!response.ok){
+		if(!response.ok) return setError(true);
 
-			// Update the Error state.
-			setError(true);
-			
-			// Alert the User that there was an error.
-			Alert.alert(response.originalError);
+		// Update the Error state.
+		setError(false);
 
-			// Print the Error to the console.
-			console.log(response.data);
-		}
-		else{
-			// Update the Error state.
-			setError(false);
+		// Store the Users Profile in Local Storage.
+		profileStorage.storeProfile(response.data);
 
-			// Alert the User that a profile was created.
-			Alert.alert("Profile Created!");
-
-			// Redirect the User to the Main Navigator.
-			navigation.navigate("Main");
-		}
+		// Redirect the User to the Main Navigator.
+		navigation.navigate("Main");
 	}
+
 
 	// Form Submit Callback
 	function handleSubmit(){
@@ -160,7 +164,7 @@ function OnBoardingForm() {
 		}
 
 		// Print the profile Object on the console.
-		console.log(profile);
+		//console.log(profile);
 
 		// Send the Profile to the API.
 		PostProfile(profile);
@@ -176,10 +180,7 @@ function OnBoardingForm() {
 					selectedValue={selectedType}
 					style={styles.picker}
 					itemStyle={styles.pickerItem}
-					onValueChange={(itemValue, itemIndex) => {
-						console.log("Selected Type: " + itemValue);
-						setSelectedType(itemValue);
-					}}
+					onValueChange={(itemValue) => { setSelectedType(itemValue); }}
 				>
 					<Picker.Item label="Student" value={'S'} key={0} />
 					<Picker.Item label="Parent/Guardian" value={'P'} key={1} />
@@ -192,10 +193,7 @@ function OnBoardingForm() {
 					selectedValue={selectedIndustry}
 					style={styles.picker}
 					itemStyle={styles.pickerItem}
-					onValueChange={(itemValue, itemIndex) => {
-						console.log("Selected Type: " + itemValue);
-						setSelectedIndustry(itemValue);
-					}}
+					onValueChange={(itemValue) => { setSelectedIndustry(itemValue); }}
 				>
 					<Picker.Item label="Business" value={1} key={1} />
 					<Picker.Item label="Creative Industries" value={2} key={2} />
@@ -212,10 +210,7 @@ function OnBoardingForm() {
 					selectedValue={selectedRegion}
 					style={styles.picker}
 					itemStyle={styles.pickerItem}
-					onValueChange={(itemValue, itemIndex) => {
-						console.log("Selected Region: " + itemValue);
-						setSelectedRegion(itemValue);
-					}}
+					onValueChange={(itemValue) => { setSelectedRegion(itemValue); }}
 				>
 					{regions.map(region => <Picker.Item label={region.name} value={region.id} key={region.id}/>)}
 				</Picker>
@@ -224,10 +219,7 @@ function OnBoardingForm() {
 					selectedValue={selectedCampus}
 					style={styles.picker}
 					itemStyle={styles.pickerItem}
-					onValueChange={(itemValue, itemIndex) => {
-						console.log("Selected Campus: " + itemValue);
-						setSelectedCampus(itemValue);
-					}}
+					onValueChange={(itemValue) => { setSelectedCampus(itemValue); }}
 				>
 					{campuses.map(campus => <Picker.Item label={campus.name} value={campus.id} key={campus.id} />)}
 				</Picker>
