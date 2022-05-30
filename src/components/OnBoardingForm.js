@@ -28,7 +28,7 @@ import Button from "./Button";
 import Space from "./Space";
 
 // Render the On Boarding Form Component.
-function OnBoardingForm() {
+function OnBoardingForm(data) {
 	// Reference to the Navigator.
 	const navigation = useNavigation();
 
@@ -136,6 +136,9 @@ function OnBoardingForm() {
 		// Update the Error state.
 		setError(false);
 
+		// Print the Profile Object on the console.
+		//rconsole.log(response.data);
+
 		// Store the Users Profile in Local Storage.
 		profileStorage.storeProfile(response.data);
 
@@ -148,12 +151,16 @@ function OnBoardingForm() {
 
 	// Form Submit Callback
 	function handleSubmit() {
+		// Convert the Token to a String.
+		const token = data.token ? String(data.token) : "";
+
 		// Create a Profile object from the Form Data.
 		const profile = {
 			type: selectedType,
 			industry: selectedIndustry,
 			region: selectedRegion,
 			campus: selectedCampus,
+			notificationToken: token,
 		};
 
 		// Print the profile Object on the console.

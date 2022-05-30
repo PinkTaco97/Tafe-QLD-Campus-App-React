@@ -5,26 +5,26 @@
  */
 
 // Import the API Layer.
-import client from './client';
+import client from "./client";
 
 // Create a Profile in the Database.
 const createProfile = (profile) => {
+	// Reference to the API endpoint.
+	const endPoint = "/profile/create";
 
-    // Reference to the API endpoint.
-    const endPoint = '/profile/create'
+	// Create the JSON object.
+	const data = new FormData();
 
-    // Create the JSON object.
-    const data = new FormData();
+	// Add the profile Data.
+	data.append("type", profile.type);
+	data.append("industry", profile.industry);
+	data.append("region", profile.region);
+	data.append("campus", profile.campus);
+	data.append("notificationToken", profile.notificationToken);
 
-    // Add the profile Data.
-    data.append('type', profile.type);
-    data.append('industry', profile.industry);
-    data.append('region', profile.region);
-    data.append('campus', profile.campus);
-
-    // POST the JSON to the server.
-    return client.post(endPoint, data);
-}
+	// POST the JSON to the server.
+	return client.post(endPoint, data);
+};
 
 // Export the API functions.
 export default {
