@@ -1,28 +1,31 @@
 // Import Thrid Party Libraies.
-import React, { useState, useEffect } from 'react';
-import {
-	Alert,
-	StyleSheet,
-	Text,
-	View,
-} from 'react-native';
-import {Picker} from '@react-native-picker/picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useContext, useEffect, useState } from "react";
+import { Alert, StyleSheet, Text, View } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Import Config Settings.
-import colors from '../config/colors';
+import colors from "../config/colors";
+
+// Import Context.
+import ProfileContext from "../context/ProfileContext";
+
+// Import Storage.
+import profileStorage from "../storage/ProfileStorage";
 
 // Import API Layers.
-import campusAPI from '../api/campus';
+import campusAPI from "../api/campus";
 
 // Import UI Components.
-import Button from '../components/Button';
+import Button from "../components/Button";
 
 // Render the Map Screen.
-function CampusPickerScreen({navigation, props}) {
-
-	// Whether there was an error. 
+function CampusPickerScreen({ navigation, props }) {
+	// Whether there was an error.
 	const [error, setError] = useState(false);
+
+	// Reference to the Users Profile.
+	const profileContext = useContext(ProfileContext);
 
 	// The Regions loaded from the Database.
 	const [regions, setRegions] = useState([]);
@@ -40,89 +43,85 @@ function CampusPickerScreen({navigation, props}) {
 	// Or when the Selected Region Changes.
 	useEffect(() => {
 		GetRegions();
-	}, [selectedRegion])
+	}, [selectedRegion]);
 
 	// Get the Campus Regions from the API.
 	const GetRegions = async () => {
-		
 		// Get the Respone from the API.
 		const response = await campusAPI.getRegions();
 
 		// If there was an Error.
-		if(!response.ok){
+		if (!response.ok) {
 			// Update the Error state.
 			setError(true);
 
 			// Alert the User that there was an error.
-			Alert.alert("Error", "There was a problem retrieving the list of Regions.");
+			Alert.alert(
+				"Error",
+				"There was a problem retrieving the list of Regions."
+			);
 
 			// Print the Error to the console.
 			console.log(response.originalError);
-		}
-		else{
+		} else {
 			// Update the Error state.
 			setError(false);
 
 			// Save the list of Regions.
-			setRegions(response.data)
+			setRegions(response.data);
 
 			// Get the list of Campuses.
 			GetCampuses(selectedRegion);
 		}
-	}
+	};
 
 	// Get the Campus Regions from the API.
 	const GetCampuses = async (region) => {
-		
 		// Clear the Campus list.
 		setCampuses([]);
-		
+
 		// Get the Respone from the API.
 		const response = await campusAPI.getCampusesByRegion(region);
 
 		// If there was an Error.
-		if(!response.ok){
+		if (!response.ok) {
 			// Update the Error state.
 			setError(true);
 
 			// Alert the User that there was an error.
-			Alert.alert("Error", "There was a problem retrieving the list of Campuses.");
-			
+			Alert.alert(
+				"Error",
+				"There was a problem retrieving the list of Campuses."
+			);
+
 			// Print the Error to the console.
 			console.log(response.originalError);
-		}
-		else{
+		} else {
 			// Update the Error state.
 			setError(false);
 
 			// Save the list of Campuses.
 			setCampuses(response.data);
 		}
-	}
+	};
 
 	// Save the Selected Campus to the Device.
 	const UpdateCampus = async () => {
-		try {
-			// Save the New Selected Campus to the Local Storage.
-			await AsyncStorage.setItem('@selected_campus', selectedCampus.toString())
-			
-			// Alert the User that their Campus was Updated.
-			Alert.alert("Success", "Updated your Campus!");
+		// Update the Profile Context.
+		profileContext.profile.region = selectedRegion;
+		profileContext.profile.campus = selectedCampus;
 
-			// Redirect the User to the More Screen.
-			navigation.navigate("More");
-		
-		// If there was an Error.
-		} catch (e) {
-			// Alert the User that there was an error.
-			Alert.alert("Error", "There was an problem updating your Campus.");
+		// Update Profile in Local Storage.
+		profileStorage.storeProfile(profileContext.profile);
 
-			// Print the Error to the console.
-			console.log(e);
-		}
-	}
+		// Alert the User that their Campus was Updated.
+		Alert.alert("Success", "Updated your Campus!");
 
-    return (
+		// Redirect the User.
+		navigation.goBack();
+	};
+
+	return (
 		<View style={styles.container}>
 			<Text style={styles.heading}>Select a Region:</Text>
 			<Picker
@@ -131,7 +130,13 @@ function CampusPickerScreen({navigation, props}) {
 				itemStyle={styles.pickerItem}
 				onValueChange={(itemValue) => setSelectedRegion(itemValue)}
 			>
-				{regions.map(region => <Picker.Item label={region.name} value={region.id} key={region.id}/>)}
+				{regions.map((region) => (
+					<Picker.Item
+						label={region.name}
+						value={region.id}
+						key={region.id}
+					/>
+				))}
 			</Picker>
 			<Text style={styles.heading}>Select a Campus:</Text>
 			<Picker
@@ -139,11 +144,17 @@ function CampusPickerScreen({navigation, props}) {
 				style={styles.picker}
 				onValueChange={(itemValue) => setSelectedCampus(itemValue)}
 			>
-				{campuses.map(campus => <Picker.Item label={campus.name} value={campus.id} key={campus.id} />)}
+				{campuses.map((campus) => (
+					<Picker.Item
+						label={campus.name}
+						value={campus.id}
+						key={campus.id}
+					/>
+				))}
 			</Picker>
-			<Button title="Save" onPress={() => UpdateCampus()}/>
+			<Button title="Save" onPress={() => UpdateCampus()} />
 		</View>
-    );
+	);
 }
 
 // Style the Components.
@@ -161,7 +172,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		backgroundColor: colors.white,
 	},
-})
+});
 
 // Export the Component.
 export default CampusPickerScreen;
