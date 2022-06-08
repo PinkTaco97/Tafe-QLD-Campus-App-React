@@ -1,61 +1,117 @@
 // Import Thrid Party Libraies.
-import React, { useState } from 'react';
-import {
-	Alert,
-	StyleSheet,
-	Text,
-	TextInput,
-	View,
-} from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useState } from "react";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 // Import Config Settings.
-import colors from '../config/colors';
+import colors from "../config/colors";
+
+// Import API Layers.
+import authAPI from "../api/auth";
 
 // Import UI Compnents.
-import Button from './Button';
-import Link from './Link';
+import Button from "./Button";
+import Link from "./Link";
 
 // Render the Register Form Component.
 function RegisterForm() {
+	// Whether the Email is Valid.
+	const [error, setError] = useState(false);
 
 	// Reference to the Navigator.
 	const navigation = useNavigation();
 
 	// The Name of the User.
-	const [name, setName] = useState('');
+	const [name, setName] = useState("");
 
 	// The Email Adress of the User.
-	const [email, setEmail] = useState('');
+	const [email, setEmail] = useState("");
 
 	// The Password of the User.
-	const [password, setPassword] = useState('');
+	const [password, setPassword] = useState("");
 
 	// The Confirm Password of the User.
-	const [confirmPassword, setConfirmPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState("");
 
 	// Validate the Data in the Login Form.
-	function ValidateForm(){
-
+	function ValidateForm() {
 		// Validate the Form Data.
-		if(name.length == 0){Alert.alert("Error", "Please enter your name.");return;}
-		if(email.length == 0){Alert.alert("Error", "Please enter your email.");return;}
-		if(!email.includes('@') || !email.includes('.com')){Alert.alert("Error", "Please enter a valid email.");return;}
-		if(password.length == 0){Alert.alert("Error", "Please enter your password.");return;}
-		if(password.length < 6){Alert.alert("Error", "Password must be atleast 6 characters long.");return;}
-		if(confirmPassword.length == 0){Alert.alert("Error", "Please confirm your password.");return;}
-		if(password !== confirmPassword){Alert.alert("Error", "Passwords don't match!");return;}
+		if (name.length == 0) {
+			Alert.alert("Error", "Please enter your name.");
+			return;
+		}
+		if (email.length == 0) {
+			Alert.alert("Error", "Please enter your email.");
+			return;
+		}
+		if (!email.includes("@") || !email.includes(".com")) {
+			Alert.alert("Error", "Please enter a valid email.");
+			return;
+		}
+		if (password.length == 0) {
+			Alert.alert("Error", "Please enter your password.");
+			return;
+		}
+		if (password.length < 6) {
+			Alert.alert("Error", "Password must be atleast 6 characters long.");
+			return;
+		}
+		if (confirmPassword.length == 0) {
+			Alert.alert("Error", "Please confirm your password.");
+			return;
+		}
+		if (password !== confirmPassword) {
+			Alert.alert("Error", "Passwords don't match!");
+			return;
+		}
 
 		// TODO: Hash User Password.
 		// TODO: Send Form Data to Server.
+
+		const user = {
+			email: email,
+			username: email,
+			password: password,
+		};
+
+		registerUser(user);
 	}
 
-    return ( 
+	// Validate the Data in the Login Form.
+	async function registerUser(user) {
+		// Get Respones from API.
+		const response = await authAPI.register(user);
+
+		// If there was an Error.
+		if (!response.ok) {
+			// Update the Error state.
+			setError(true);
+
+			Alert.alert("Error", response.originalError);
+
+			// Print the Error to the console.
+			console.log(response.originalError);
+		} else {
+			// Update the Error state.
+			setError(false);
+
+			// Print the Error to the console.
+			console.log(response.data);
+
+			Alert.alert("Success", "Account Created.");
+
+			navigation.goBack();
+		}
+	}
+
+	return (
 		<View style={styles.container}>
 			<View style={styles.form}>
 				<Text style={styles.title}>Register</Text>
-				<Text style={styles.description}>This account is seperate from your Tafe QLD identity.</Text>
+				<Text style={styles.description}>
+					This account is seperate from your Tafe QLD identity.
+				</Text>
 				<View style={styles.input}>
 					<FontAwesome
 						name="user"
@@ -65,9 +121,9 @@ function RegisterForm() {
 					/>
 					<TextInput
 						style={styles.textInput}
-						placeholder='Name'
+						placeholder="Name"
 						value={name}
-						onChangeText={text => setName(text)}
+						onChangeText={(text) => setName(text)}
 						autoCapitalize="none"
 					/>
 				</View>
@@ -80,9 +136,9 @@ function RegisterForm() {
 					/>
 					<TextInput
 						style={styles.textInput}
-						placeholder='Email Address'
+						placeholder="Email Address"
 						value={email}
-						onChangeText={text => setEmail(text)}
+						onChangeText={(text) => setEmail(text)}
 						autoCapitalize="none"
 					/>
 				</View>
@@ -95,9 +151,9 @@ function RegisterForm() {
 					/>
 					<TextInput
 						style={styles.textInput}
-						placeholder='Password'
+						placeholder="Password"
 						value={password}
-						onChangeText={text => setPassword(text)}
+						onChangeText={(text) => setPassword(text)}
 						autoCapitalize="none"
 						secureTextEntry
 					/>
@@ -111,44 +167,44 @@ function RegisterForm() {
 					/>
 					<TextInput
 						style={styles.textInput}
-						placeholder='Confirm Password'
+						placeholder="Confirm Password"
 						value={confirmPassword}
-						onChangeText={text => setConfirmPassword(text)}
+						onChangeText={(text) => setConfirmPassword(text)}
 						autoCapitalize="none"
 						secureTextEntry
 					/>
 				</View>
-				<Button title="Register" onPress={() => ValidateForm()}/>
+				<Button title="Register" onPress={() => ValidateForm()} />
 				<Text style={styles.label}>Already have an account?</Text>
 				<Link
 					title="Login"
 					style={styles.registerLink}
-					onPress={() => navigation.navigate('Login')}
+					onPress={() => navigation.navigate("Login")}
 				/>
 			</View>
 		</View>
-    );
+	);
 }
 
 // Style the Components.
 const styles = StyleSheet.create({
 	container: {
-		width: '100%',
-		alignItems: 'center',
-		justifyContent: 'center',
+		width: "100%",
+		alignItems: "center",
+		justifyContent: "center",
 		padding: 15,
 	},
 	form: {
-		width: '100%',
+		width: "100%",
 		backgroundColor: colors.white,
 		borderRadius: 25,
 		padding: 5,
-		justifyContent: 'center',
+		justifyContent: "center",
 	},
 	title: {
 		color: colors.dark,
 		fontSize: 35,
-		fontWeight: 'bold',
+		fontWeight: "bold",
 		paddingLeft: 15,
 		paddingTop: 15,
 	},
@@ -157,21 +213,21 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		padding: 15,
 	},
-	input:{
-		flexDirection:'row',
-		justifyContent: 'center',
+	input: {
+		flexDirection: "row",
+		justifyContent: "center",
 		marginHorizontal: 15,
-		marginVertical:10,
+		marginVertical: 10,
 		borderBottomColor: colors.light,
 		borderBottomWidth: 2,
 	},
-	icon:{
-		alignSelf: 'center',
+	icon: {
+		alignSelf: "center",
 		padding: 5,
 		width: 30,
 	},
 	textInput: {
-		flex:1,
+		flex: 1,
 		color: colors.dark,
 		padding: 10,
 
@@ -184,15 +240,15 @@ const styles = StyleSheet.create({
 	label: {
 		color: colors.dark,
 		fontSize: 15,
-		alignSelf: 'center',
+		alignSelf: "center",
 	},
 	forgotPasswordLink: {
-		alignSelf: 'flex-end',
+		alignSelf: "flex-end",
 	},
 	registerLink: {
-		alignSelf: 'center',
+		alignSelf: "center",
 	},
-})
+});
 
 // Export the Component.
 export default RegisterForm;

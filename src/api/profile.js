@@ -21,6 +21,7 @@ const createProfile = (profile) => {
 	data.append("region", profile.region);
 	data.append("campus", profile.campus);
 	data.append("notificationToken", profile.notificationToken);
+	data.append("platform", profile.platform);
 
 	// POST the JSON to the server.
 	return client.post(endPoint, data);

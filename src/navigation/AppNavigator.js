@@ -14,9 +14,11 @@ import colors from "../config/colors";
 
 // Import Context.
 import ProfileContext from "../context/ProfileContext";
+import AuthContext from "../context/AuthContext";
 
 // Import Storage.
 import ProfileStorage from "../storage/ProfileStorage";
+import AuthStorage from "../storage/AuthStorage";
 
 // Import Navigators.
 import TabNavigator from "./TabNavigator";
@@ -49,6 +51,13 @@ function AppNavigator() {
 
 	// Reference to the Users Profile.
 	const [profile, setProfile] = useState(null);
+
+	// Reference to the Users Authentication.
+	const [auth, setAuth] = useState({
+		key: null,
+		token: null,
+		isLoading: false, 
+	});
 
 	// Called when the Componenet is Rendered.
 	useEffect(() => {
@@ -84,6 +93,12 @@ function AppNavigator() {
 	// Load the Users Profile from Local Storage.
 	async function RestoreProfile() {
 		setProfile(await ProfileStorage.retrieveProfile());
+		RestoreAccount();
+	}
+
+	// Load the Users Account from Local Storage.
+	async function RestoreAccount() {
+		setAuth(await AuthStorage.retrieveAuth());
 		setIsLoading(false);
 	}
 
@@ -128,40 +143,42 @@ function AppNavigator() {
 
 	return (
 		<ProfileContext.Provider value={{ profile, setProfile }}>
-			<NavigationContainer ref={navigationRef}>
-				<Stack.Navigator
-					initialRouteName="Loading"
-					screenOptions={{
-						headerShown: false,
-						// animation: "slide_from_bottom",
-					}}
-				>
-					<Stack.Screen name="Loading" component={LoadingScreen} />
-					<Stack.Screen name="AboutYou" component={AboutYouScreen} />
-					<Stack.Screen name="Main" component={TabNavigator} />
-					<Stack.Screen name="Auth" component={AuthNavigator} />
-					<Stack.Screen
-						name="ChangeCampus"
-						component={CampusPickerScreen}
-						options={{
-							presentation: "modal",
-							headerShown:
-								Platform.OS === "android" ? true : false,
-							headerTitle: "Select a Campus",
+			<AuthContext.Provider value={{ auth, setAuth }}>
+				<NavigationContainer ref={navigationRef}>
+					<Stack.Navigator
+						initialRouteName="Loading"
+						screenOptions={{
+							headerShown: false,
+							// animation: "slide_from_bottom",
 						}}
-					/>
-					<Stack.Screen
-						name="WebView"
-						component={WebViewScreen}
-						options={{
-							presentation: "modal",
-							headerShown:
-								Platform.OS === "android" ? true : false,
-							headerTitle: "WebView",
-						}}
-					/>
-				</Stack.Navigator>
-			</NavigationContainer>
+					>
+						<Stack.Screen name="Loading" component={LoadingScreen} />
+						<Stack.Screen name="AboutYou" component={AboutYouScreen} />
+						<Stack.Screen name="Main" component={TabNavigator} />
+						<Stack.Screen name="Auth" component={AuthNavigator} />
+						<Stack.Screen
+							name="ChangeCampus"
+							component={CampusPickerScreen}
+							options={{
+								presentation: "modal",
+								headerShown:
+									Platform.OS === "android" ? true : false,
+								headerTitle: "Select a Campus",
+							}}
+						/>
+						<Stack.Screen
+							name="WebView"
+							component={WebViewScreen}
+							options={{
+								presentation: "modal",
+								headerShown:
+									Platform.OS === "android" ? true : false,
+								headerTitle: "WebView",
+							}}
+						/>
+					</Stack.Navigator>
+				</NavigationContainer>
+			</AuthContext.Provider>
 		</ProfileContext.Provider>
 	);
 }

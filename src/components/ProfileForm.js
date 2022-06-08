@@ -3,12 +3,18 @@ import React, {
 	useContext,
 	useEffect,
 	useState,
-	componentDidMount,
 } from "react";
-import { Alert, StyleSheet, Text, View, ScrollView } from "react-native";
+import {
+	Alert,
+	Platform,
+	ScrollView,
+	StyleSheet,
+	Text,
+	View,
+	
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Import Config Settings.
 import colors from "../config/colors";
@@ -131,22 +137,33 @@ function OnBoardingForm(data) {
 		const response = await profileAPI.createProfile(profile);
 
 		// If there was an Error.
-		if (!response.ok) return setError(true);
+		if (!response.ok){
 
-		// Update the Error state.
-		setError(false);
+			// Update the Error state.
+			setError(true);
 
-		// Print the Profile Object on the console.
-		//rconsole.log(response.data);
+			// Print the Error to the console.
+			console.log(response.originalError);
+			
+		}
+		else{
+			// Update the Error state.
+			setError(false);
 
-		// Store the Users Profile in Local Storage.
-		profileStorage.storeProfile(response.data);
+			// Print the Profile Object on the console.
+			//console.log(response.data);
 
-		// Updated the Profile Context.
-		profileContext.setProfile(response.data);
+			// Store the Users Profile in Local Storage.
+			profileStorage.storeProfile(response.data);
 
-		// Redirect the User to the Main Navigator.
-		navigation.navigate("Main");
+			// Updated the Profile Context.
+			profileContext.setProfile(response.data);
+
+			// Redirect the User to the Main Navigator.
+			navigation.navigate("Main");
+		}
+
+		
 	};
 
 	// Form Submit Callback
@@ -161,6 +178,7 @@ function OnBoardingForm(data) {
 			region: selectedRegion,
 			campus: selectedCampus,
 			notificationToken: token,
+			platform: Platform.OS,
 		};
 
 		// Print the profile Object on the console.

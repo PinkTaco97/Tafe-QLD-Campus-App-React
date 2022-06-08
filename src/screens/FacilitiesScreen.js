@@ -58,10 +58,10 @@ function FacilitiesScreen({ navigation }) {
 			setError(true);
 
 			// Alert the User that there was an error.
-			alert(response.originalError);
+			//alert(response.originalError);
 
 			// Print the Error to the console.
-			console.log(response.originalError);
+			console.log(response.status + " - " + response.problem);
 		} else {
 			// Update the Error state.
 			setError(false);

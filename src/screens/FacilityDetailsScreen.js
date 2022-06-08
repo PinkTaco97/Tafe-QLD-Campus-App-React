@@ -48,16 +48,16 @@ function FacilityDetailsScreen({ navigation, route }) {
 					{/* <Text style={styles.title}>{facility.name}</Text> */}
 					<Text style={styles.content}>{facility.description}</Text>
 					{
-						facility.menuLink.length != 0 ?
-							<Button title="View Menu" onPress={() => navigation.navigate("WebView", facility.menuLink)}></Button>
+						facility.link1Title.length != 0 && facility.link1URL.length != 0 ?
+							<Button title={facility.link1Title} onPress={() => navigation.navigate("WebView", facility.link1URL)}></Button>
 						:
-							<></>
+						 	<></>
 					}
 					{
-						facility.bookingLink.length != 0 ?
-							<Button title="Book a Table" onPress={() => navigation.navigate("WebView", facility.bookingLink)}></Button>
+						facility.link2Title.length != 0 && facility.link2URL.length != 0 ?
+							<Button title={facility.link2Title} onPress={() => navigation.navigate("WebView", facility.link2URL)}></Button>
 						:
-							<></>
+						 	<></>
 					}
 					<Space height={25}/>
 				</ScrollView>

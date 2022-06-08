@@ -1,6 +1,10 @@
 // Import Thrid Party Libraies.
-import React,{ useState } from 'react';
+import React, {
+	useContext,
+	useState,
+} from "react";
 import {
+	Alert,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -12,17 +16,82 @@ import { useNavigation } from '@react-navigation/native';
 // Import Config Settings.
 import colors from '../config/colors';
 
+// Import API Layers.
+import authAPI from "../api/auth";
+
 // Import UI Compnents.
 import Button from './Button';
 
 // Render the Forgot Password Form Component.
 function ForgotPasswordForm() {
 
+	// Whether the Email is Valid.
+	const [error, setError] = useState(false);
+
 	// Reference to the Navigator.
 	const navigation = useNavigation();
 
 	// The Email Adress of the User.
 	const [email, setEmail] = useState('');
+
+	// Whether the Email is Valid.
+	const [emailValid, setEmailValid] = useState(true);
+
+	// Validate the Data in the Login Form.
+	function ValidateForm(){
+
+		// Validate the Form Data.
+		if(email.length == 0){
+			Alert.alert("Error", "Please enter your email.");
+			setEmailValid(false);
+			return;
+		}
+		if(!email.includes('@') || !email.includes('.com')){
+			Alert.alert("Error", "Please enter a valid email.");
+			setEmailValid(false);
+			return;}
+		
+		forgotPassword()
+
+		
+
+		// TODO: Hash User Password.
+		// TODO: Send Email & Password to Server.
+		
+		setEmail('');
+		setEmailValid(true);
+	}
+
+	// Validate the Data in the Login Form.
+	async function forgotPassword(){
+		// Get Respones from API.
+		const response = await authAPI.forgotPassword(email);
+
+		// If there was an Error.
+		if (!response.ok) {
+			// Update the Error state.
+			setError(true);
+
+			Alert.alert(
+				"Error",
+				response.originalError
+			);
+
+			// Print the Error to the console.
+			console.log(response.originalError);
+
+		} else {
+			// Update the Error state.
+			setError(false);
+
+			Alert.alert(
+				"Success",
+				"Please check your email."
+			);
+
+			navigation.navigate('Main');
+		}
+	}
 
     return ( 
 		<View style={styles.container}>
@@ -44,7 +113,7 @@ function ForgotPasswordForm() {
 						autoCapitalize="none"
 					/>
 				</View>
-				<Button title="Submit" onPress={() => navigation.navigate('Main')}/>
+				<Button title="Submit" onPress={() => ValidateForm()}/>
 			</View>
 		</View>
     );

@@ -7,7 +7,7 @@ import colors from "../config/colors";
 
 // Import UI Components.
 import Header from "../components/Header";
-import OnBoardingForm from "../components/OnBoardingForm";
+import ProfileForm from "../components/ProfileForm";
 
 // Render the About You Screen.
 function AboutYouScreen({ navigation, route }) {
@@ -17,7 +17,7 @@ function AboutYouScreen({ navigation, route }) {
 	return (
 		<View>
 			<Header title="Welcome" />
-			<OnBoardingForm token={data} />
+			<ProfileForm token={data} />
 		</View>
 	);
 }

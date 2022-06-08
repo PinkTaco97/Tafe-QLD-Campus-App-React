@@ -7,9 +7,11 @@ import colors from "../config/colors";
 
 // Import Storage.
 import ProfileStorage from "../storage/ProfileStorage";
+import AuthStorage from "../storage/AuthStorage";
 
 // Import Context.
 import ProfileContext from "../context/ProfileContext";
+import AuthContext from "../context/AuthContext";
 
 // Import UI Components.
 import Header from "../components/Header";
@@ -61,6 +63,9 @@ function MoreScreen({ navigation }) {
 	// Reference to the Users Profile.
 	const profileContext = useContext(ProfileContext);
 
+	// Reference to the Users Account.
+	const authContext = useContext(AuthContext);
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.contentWrapper}>
@@ -81,12 +86,14 @@ function MoreScreen({ navigation }) {
 					ListHeaderComponent={
 						() => (
 							// <Space height={10}/>
-							//isloggedin ?
-							<SettingsItem
-								title="Login"
-								icon={"user"}
-								onPress={() => navigation.navigate("Auth")}
-							/>
+							authContext.auth == null ?
+								<SettingsItem
+									title="Login"
+									icon={"user"}
+									onPress={() => navigation.navigate("Auth")}
+								/>
+							:
+								<></>
 						)
 						//:
 						// <SettingsItem
@@ -97,19 +104,42 @@ function MoreScreen({ navigation }) {
 					}
 					ListFooterComponent={() => (
 						<>
-							<Button
+							{/* <Button
 								title="Show Profile"
 								onPress={() =>
 									console.log(profileContext.profile)
 								}
 							/>
 							<Button
-								title="Clear Local Storage"
+								title="Clear Profile"
 								onPress={() => {
 									ProfileStorage.removeProfile();
 									profileContext.setProfile(null);
 								}}
 							/>
+							<Button
+								title="Show Account"
+								onPress={() =>
+									console.log(authContext.auth)
+								}
+							/> */}
+							{
+								authContext.auth != null ?
+									<Button
+										title="Logout"
+										onPress={() => {
+											AuthStorage.removeAuth();
+											// const user = {
+											// 	key: null,
+											// 	token: null,
+											// 	isLoading: false, 
+											// };
+											authContext.setAuth(null);
+										}}
+									/>
+								:
+									<></>
+							}
 							<Space height={55} />
 						</>
 					)}
