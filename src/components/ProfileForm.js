@@ -28,6 +28,7 @@ import profileStorage from "../storage/ProfileStorage";
 // Import API Layers.
 import campusAPI from "../api/campus";
 import profileAPI from "../api/profile";
+import industryAPI from "../api/industry";
 
 // Import UI Compnents.
 import Button from "./Button";
@@ -65,11 +66,36 @@ function OnBoardingForm(data) {
 	// The Selected Campus.
 	const [selectedCampus, setSelectedCampus] = useState(0);
 
+	useEffect(() => {
+		GetIndustries();
+	}, []);
+
 	// Called when Componenet is Rendered.
 	// Or when the Selected Region Changes.
 	useEffect(() => {
 		GetRegions();
 	}, [selectedRegion]);
+
+	// Get the Campus Regions from the API.
+	const GetIndustries = async () => {
+		// Get the Respone from the API.
+		const response = await industryAPI.getIndustries();
+
+		// If there was an Error.
+		if (!response.ok) {
+			// Update the Error state.
+			setError(true);
+
+			// Print the Error to the console.
+			console.log("Error - There was a problem retrieving the list of Industries.\n" + response.originalError);
+		} else {
+			// Update the Error state.
+			setError(false);
+
+			// Save the list of Regions.
+			setIndustries(response.data);
+		}
+	};
 
 	// Get the Campus Regions from the API.
 	const GetRegions = async () => {
@@ -220,7 +246,14 @@ function OnBoardingForm(data) {
 						setSelectedIndustry(itemValue);
 					}}
 				>
-					<Picker.Item label="Business" value={1} key={1} />
+					{industries.map((industry) => (
+						<Picker.Item
+							label={industry.name}
+							value={industry.id}
+							key={industry.id}
+						/>
+					))}
+					{/* <Picker.Item label="Business" value={1} key={1} />
 					<Picker.Item
 						label="Creative Industries"
 						value={2}
@@ -248,7 +281,7 @@ function OnBoardingForm(data) {
 						key={7}
 					/>
 					<Picker.Item label="Service Industries" value={8} key={8} />
-					<Picker.Item label="Trades" value={9} key={9} />
+					<Picker.Item label="Trades" value={9} key={9} /> */}
 				</Picker>
 				<Text style={styles.heading}>My Region:</Text>
 				<Picker

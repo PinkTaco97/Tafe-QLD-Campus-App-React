@@ -84,17 +84,17 @@ function MoreScreen({ navigation }) {
 					)}
 					ItemSeparatorComponent={() => <Space height={10} />}
 					ListHeaderComponent={
-						() => (
+						() =>
 							// <Space height={10}/>
-							authContext.auth == null ?
+							authContext.auth == null ? (
 								<SettingsItem
 									title="Login"
 									icon={"user"}
 									onPress={() => navigation.navigate("Auth")}
 								/>
-							:
+							) : (
 								<></>
-						)
+							)
 						//:
 						// <SettingsItem
 						// 	title='Logout'
@@ -104,42 +104,30 @@ function MoreScreen({ navigation }) {
 					}
 					ListFooterComponent={() => (
 						<>
-							{/* <Button
+							<Button
 								title="Show Profile"
-								onPress={() =>
-									console.log(profileContext.profile)
-								}
+								onPress={() => {
+									console.log(profileContext.profile);
+								}}
 							/>
 							<Button
-								title="Clear Profile"
+								title="Delete Profile"
 								onPress={() => {
 									ProfileStorage.removeProfile();
 									profileContext.setProfile(null);
 								}}
 							/>
-							<Button
-								title="Show Account"
-								onPress={() =>
-									console.log(authContext.auth)
-								}
-							/> */}
-							{
-								authContext.auth != null ?
-									<Button
-										title="Logout"
-										onPress={() => {
-											AuthStorage.removeAuth();
-											// const user = {
-											// 	key: null,
-											// 	token: null,
-											// 	isLoading: false, 
-											// };
-											authContext.setAuth(null);
-										}}
-									/>
-								:
-									<></>
-							}
+							{authContext.auth != null ? (
+								<Button
+									title="Logout"
+									onPress={() => {
+										AuthStorage.removeAuth();
+										authContext.setAuth(null);
+									}}
+								/>
+							) : (
+								<></>
+							)}
 							<Space height={55} />
 						</>
 					)}
