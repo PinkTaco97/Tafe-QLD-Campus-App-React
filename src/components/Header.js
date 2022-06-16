@@ -1,23 +1,18 @@
 // Import Thrid Party Libraies.
-import React from 'react';
-import {
-	View,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-} from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import React from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
 // Import Config Settings.
-import colors from '../config/colors';
+import colors from "../config/colors";
 
 // Import UI Components.
-import Link from './Link';
+import Link from "./Link";
 
 // Render the Header Component.
 function Header({
 	title,
-	color = 'primary',
+	color = "primary",
 	style,
 	leftLink = false,
 	leftLinkText,
@@ -27,34 +22,41 @@ function Header({
 	rightLinkColor,
 	onRightLink,
 	back = false,
-	backColor = 'white',
+	backColor = "white",
 	onBack,
-	
-	}) {
-    return ( 
-		<View style={[styles.container, style, {backgroundColor: colors[color]}]}>
-			{
-				back ?
-					<TouchableOpacity style={styles.backButton} onPress={onBack}>
-						<FontAwesome name="arrow-left" size={30} color={colors[backColor]}/>
-					</TouchableOpacity>
-				:
-					<></>
-			}
-			{
-				rightLink ?
+}) {
+	return (
+		<View
+			style={[
+				styles.container,
+				style,
+				{ backgroundColor: colors[color] },
+			]}
+		>
+			{back ? (
+				<TouchableOpacity style={styles.backButton} onPress={onBack}>
+					<FontAwesome
+						name="arrow-left"
+						size={30}
+						color={colors[backColor]}
+					/>
+				</TouchableOpacity>
+			) : (
+				<></>
+			)}
+			{rightLink ? (
 				<Link
 					title={rightLinkText}
 					style={styles.rightLink}
 					onPress={onRightLink}
 					color={rightLinkColor}
 				/>
-				:
-					<></>
-			}
+			) : (
+				<></>
+			)}
 			<Text style={styles.title}>{title}</Text>
 		</View>
-    );
+	);
 }
 
 // Style the Components.
@@ -63,8 +65,8 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: 75,
 		backgroundColor: colors.primary,
-		alignItems: 'center',
-		justifyContent: 'center',
+		alignItems: "center",
+		justifyContent: "center",
 		zIndex: 9,
 	},
 	title: {
@@ -72,31 +74,32 @@ const styles = StyleSheet.create({
 		// backgroundColor: colors.light,
 		// position: 'absolute',
 		// top: 0,
-		fontSize: 30,
-		fontWeight: 'bold',
+		fontSize: 20,
+		fontWeight: "bold",
 		height: 50,
 		lineHeight: 40,
-		overflow: 'visible',
-		textAlignVertical: 'center',
+		overflow: "hidden",
+		textAlignVertical: "center",
 	},
 	backButton: {
-		position: 'absolute',
+		position: "absolute",
 		top: 12.5,
 		left: 12.5,
 		height: 50,
 		width: 50,
-		alignItems: 'center',
-		justifyContent: 'center',
+		alignItems: "center",
+		justifyContent: "center",
+		zIndex: 10,
 	},
 	rightLink: {
 		height: 75,
 		width: 75,
-		position: 'absolute',
+		position: "absolute",
 		right: 0,
 		// backgroundColor: colors.light,
 		//alignSelf: 'flex-end',
 	},
-})
+});
 
 // Export the Component.
 export default Header;
