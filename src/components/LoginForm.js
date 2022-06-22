@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import * as Crypto from "expo-crypto";
 
 // Import Config Settings.
 import colors from "../config/colors";
@@ -51,7 +52,7 @@ function LoginForm() {
 	const [passwordValid, setPasswordValid] = useState(true);
 
 	// Validate the Data in the Login Form.
-	function ValidateForm() {
+	async function ValidateForm() {
 		// Validate the Form Data.
 		if (email.length == 0) {
 			Alert.alert("Error", "Please enter your email.");
@@ -76,16 +77,21 @@ function LoginForm() {
 			return;
 		}
 
+		// Hash the User's Password.
+		const hashedPassword = await Crypto.digestStringAsync(
+			Crypto.CryptoDigestAlgorithm.SHA256,
+			password
+		);
+
 		const user = {
 			email: email,
-			password: password,
+			password: hashedPassword,
 		};
 
+		// Log the User In.
 		Login(user);
 
-		// TODO: Hash User Password.
-		// TODO: Send Email & Password to Server.
-		//Alert.alert("Welcome");
+		// Reset the Form.
 		setEmail("");
 		setEmailValid(true);
 		setPassword("");
@@ -109,7 +115,7 @@ function LoginForm() {
 			}
 
 			// Print the Error to the console.
-			console.log(response.originalError);
+			//console.log(response.originalError);
 		} else {
 			// Update the Error state.
 			setError(false);

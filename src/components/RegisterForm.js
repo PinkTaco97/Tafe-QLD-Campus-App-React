@@ -3,9 +3,11 @@ import React, { useContext, useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import * as Crypto from "expo-crypto";
 
 // Import Config Settings.
 import colors from "../config/colors";
+import settings from "../config/settings";
 
 // Import API Layers.
 import authAPI from "../api/auth";
@@ -35,7 +37,7 @@ function RegisterForm() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 
 	// Validate the Data in the Login Form.
-	function ValidateForm() {
+	async function ValidateForm() {
 		// Validate the Form Data.
 		if (name.length == 0) {
 			Alert.alert("Error", "Please enter your name.");
@@ -66,15 +68,20 @@ function RegisterForm() {
 			return;
 		}
 
-		// TODO: Hash User Password.
-		// TODO: Send Form Data to Server.
+		// Hash the User's Password.
+		const hashedPassword = await Crypto.digestStringAsync(
+			Crypto.CryptoDigestAlgorithm.SHA256,
+			password
+		);
 
+		// Create the User Object.
 		const user = {
 			email: email,
 			username: email,
-			password: password,
+			password: hashedPassword,
 		};
 
+		// Register the User
 		registerUser(user);
 	}
 
@@ -88,19 +95,22 @@ function RegisterForm() {
 			// Update the Error state.
 			setError(true);
 
-			Alert.alert("Error", response.originalError);
+			// Alert the User that there was an Error.
+			Alert.alert(
+				"Error",
+				"There was an error creating your account, please try again later."
+			);
 
 			// Print the Error to the console.
-			console.log(response.originalError);
+			if (settings.isDebug) console.log(response.originalError);
 		} else {
 			// Update the Error state.
 			setError(false);
 
-			// Print the Error to the console.
-			console.log(response.data);
-
+			// Alert the User that their account was created.
 			Alert.alert("Success", "Account Created.");
 
+			// Redirect the User to the previous screen.
 			navigation.goBack();
 		}
 	}

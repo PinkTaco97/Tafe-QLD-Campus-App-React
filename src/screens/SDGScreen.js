@@ -57,7 +57,7 @@ function SDGScreen({ navigation }) {
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.contentWrapper}>
-				<Header title="SDG Info" />
+				<Header title="Sustainability" />
 				<FlatList
 					style={styles.scrollView}
 					data={goals}

@@ -1,81 +1,100 @@
 // Import Thrid Party Libraies.
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
 	Image,
 	SafeAreaView,
 	StyleSheet,
 	Text,
 	View,
-    ScrollView,
-} from 'react-native';
+	ScrollView,
+} from "react-native";
 
 // Import Config Settings.
-import colors from '../config/colors';
+import colors from "../config/colors";
 
 // Import UI Compponents.
-import Header from '../components/Header';
-import Button from '../components/Button';
-import Space from '../components/Space';
+import Header from "../components/Header";
+import Button from "../components/Button";
+import Space from "../components/Space";
+import OpeningHours from "../components/OpeningHours";
 
 // Render Facility Details Screen.
 function FacilityDetailsScreen({ navigation, route }) {
-
 	// The Facility Data passed from the Previous Screen.
 	const facility = route.params;
 
 	// The Events Image.
-	const image = { uri: facility.image }
+	const image = { uri: facility.image };
 
 	// Called when Componenet is Rendered.
 	useEffect(() => {
 		// Print the Facility Data to the console.
-		//console.log(facility);
+		//console.log(facility.hours);
 
 		// Set the Title of the Screen.
-		navigation.setOptions({headerTitle: facility.name})
-	}, [])
+		navigation.setOptions({ headerTitle: facility.name });
+	}, []);
 
-    return (
+	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.contentWrapper}>
 				<Header
 					title={facility.name}
 					back={true}
-					onBack={() => {navigation.navigate("Facilities");}}
+					onBack={() => {
+						navigation.navigate("Facilities");
+					}}
 				/>
 				<ScrollView style={styles.scrollView}>
-					<Image style={styles.image} source={image}/>
+					<Image style={styles.image} source={image} />
 					{/* <Text style={styles.title}>{facility.name}</Text> */}
 					<Text style={styles.content}>{facility.description}</Text>
-					{
-						facility.link1Title.length != 0 && facility.link1URL.length != 0 ?
-							<Button title={facility.link1Title} onPress={() => navigation.navigate("WebView", facility.link1URL)}></Button>
-						:
-						 	<></>
-					}
-					{
-						facility.link2Title.length != 0 && facility.link2URL.length != 0 ?
-							<Button title={facility.link2Title} onPress={() => navigation.navigate("WebView", facility.link2URL)}></Button>
-						:
-						 	<></>
-					}
-					<Space height={25}/>
+					<OpeningHours hours={facility.hours} />
+					{facility.link1Title.length != 0 &&
+					facility.link1URL.length != 0 ? (
+						<Button
+							title={facility.link1Title}
+							onPress={() =>
+								navigation.navigate(
+									"WebView",
+									facility.link1URL
+								)
+							}
+						></Button>
+					) : (
+						<></>
+					)}
+					{facility.link2Title.length != 0 &&
+					facility.link2URL.length != 0 ? (
+						<Button
+							title={facility.link2Title}
+							onPress={() =>
+								navigation.navigate(
+									"WebView",
+									facility.link2URL
+								)
+							}
+						></Button>
+					) : (
+						<></>
+					)}
+					<Space height={25} />
 				</ScrollView>
 			</View>
 		</SafeAreaView>
-    );
+	);
 }
 
 // Style the Components.
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-        backgroundColor: colors.primary,
+		backgroundColor: colors.primary,
 	},
 	contentWrapper: {
 		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
+		alignItems: "center",
+		justifyContent: "center",
 		backgroundColor: colors.white,
 	},
 	image: {
@@ -84,53 +103,52 @@ const styles = StyleSheet.create({
 	},
 	date: {
 		height: 30,
-		position: 'absolute',
+		position: "absolute",
 		top: 10,
 		right: 10,
 		fontSize: 15,
-		fontWeight: 'bold',
+		fontWeight: "bold",
 		color: colors.black,
 		backgroundColor: colors.white,
 		paddingHorizontal: 10,
 		borderRadius: 25,
-		textAlignVertical: 'center',
+		textAlignVertical: "center",
 	},
 	location: {
 		height: 30,
-		position: 'absolute',
+		position: "absolute",
 		top: 10,
 		left: 10,
 		fontSize: 15,
-		fontWeight: 'bold',
+		fontWeight: "bold",
 		color: colors.white,
 		backgroundColor: colors.primary,
 		paddingHorizontal: 10,
 		borderRadius: 25,
-		textAlignVertical: 'center',
+		textAlignVertical: "center",
 	},
 	title: {
 		height: 75,
 		fontSize: 25,
-		fontWeight: 'bold',
+		fontWeight: "bold",
 		color: colors.dark,
-		textAlign: 'center',
-		textAlignVertical: 'center',
+		textAlign: "center",
+		textAlignVertical: "center",
 		marginTop: 10,
 	},
 	scrollView: {
-		
 		width: "100%",
 		flex: 1,
 		backgroundColor: colors.white,
 	},
-    content: {
+	content: {
 		fontSize: 15,
 		color: colors.dark,
 		backgroundColor: colors.white,
 		padding: 25,
-		textAlign: 'center',
+		textAlign: "center",
 	},
-})
+});
 
 // Export the Component.
 export default FacilityDetailsScreen;

@@ -24,23 +24,23 @@ const settings = [
 	{
 		title: "Change Campus",
 		screen: "ChangeCampus",
-		icon: "map-marker",
+		icon: "building",
 	},
 	{
 		title: "Send Feedback",
 		screen: "Feedback",
 		icon: "comment",
 	},
-	{
-		title: "Report a Bug",
-		screen: "ReportBug",
-		icon: "bug",
-	},
-	{
-		title: "Terms & Conditions",
-		screen: "TermsConditions",
-		icon: "info-circle",
-	},
+	// {
+	// 	title: "Report a Bug",
+	// 	screen: "ReportBug",
+	// 	icon: "bug",
+	// },
+	// {
+	// 	title: "Terms & Conditions",
+	// 	screen: "TermsConditions",
+	// 	icon: "info-circle",
+	// },
 	{
 		title: "Privacy Policy",
 		screen: "PrivacyPolicy",
@@ -104,7 +104,7 @@ function MoreScreen({ navigation }) {
 					}
 					ListFooterComponent={() => (
 						<>
-							<Button
+							{/* <Button
 								title="Show Profile"
 								onPress={() => {
 									console.log(profileContext.profile);
@@ -116,7 +116,7 @@ function MoreScreen({ navigation }) {
 									ProfileStorage.removeProfile();
 									profileContext.setProfile(null);
 								}}
-							/>
+							/> */}
 							{authContext.auth != null ? (
 								<Button
 									title="Logout"

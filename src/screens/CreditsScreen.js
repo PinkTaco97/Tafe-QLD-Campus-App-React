@@ -1,32 +1,61 @@
 // Import Thrid Party Libraies.
-import React from 'react';
+import React from "react";
 import {
-	Image,
-	Dimensions,
-	StyleSheet,
-	View,
 	SafeAreaView,
-} from 'react-native';
+	SectionList,
+	StyleSheet,
+	Text,
+	View,
+} from "react-native";
 
 // Import Config Settings.
-import colors from '../config/colors';
+import colors from "../config/colors";
 
 // Import UI Components.
-import Header from '../components/Header';
+import Header from "../components/Header";
 
 // Render the Credits Screen.
 function CreditsScreen({ navigation }) {
-    return (
+	const credits = [
+		{
+			title: "July 2021 Cohort",
+			data: ["Nathan Robertson", "Indra Shrestha", "Tracey Fox"],
+		},
+		{
+			title: "Janurary 2021 Cohort",
+			data: ["Please Update", "Please Update", "Please Update"],
+		},
+		{
+			title: "Project Manager",
+			data: ["Elankayer Sithirasnan"],
+		},
+	];
+
+	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.contentWrapper}>
 				<Header
 					title="Credits"
 					back={true}
-					onBack={() => {navigation.navigate("More");}}
+					onBack={() => {
+						navigation.navigate("More");
+					}}
+				/>
+				<SectionList
+					sections={credits}
+					renderItem={({ item }) => (
+						<Text style={styles.item}>{item}</Text>
+					)}
+					renderSectionHeader={({ section }) => (
+						<Text style={styles.sectionHeader}>
+							{section.title}
+						</Text>
+					)}
+					keyExtractor={(item, index) => index}
 				/>
 			</View>
 		</SafeAreaView>
-    );
+	);
 }
 
 // Style the Components.
@@ -39,7 +68,19 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: colors.light,
 	},
-})
+	sectionHeader: {
+		padding: 10,
+		fontSize: 25,
+		fontWeight: "bold",
+		textAlign: "center",
+	},
+	item: {
+		padding: 10,
+		fontSize: 18,
+		height: 44,
+		textAlign: "center",
+	},
+});
 
 // Export the Component.
 export default CreditsScreen;
