@@ -23,6 +23,9 @@ function QRScanScreen({ navigation, route }) {
 
 	// Whether the App has Permission to Access the Camera.
 	const [hasCameraPermission, setHasCameraPermission] = useState(null);
+
+	// Whether the Tab is Focused
+	const isFocused = useIsFocused();
 	
 	// Whether the App is Scanning for a QR Code.
 	const [scanned, setScanned] = useState(false);
@@ -37,9 +40,10 @@ function QRScanScreen({ navigation, route }) {
 
 	// Called when a Barcode is Scanned.
 	const onBarCodeScanned = ({ type, data }) => {
-		setScanned(true);
-		//console.log("Barcode Scanned: (Type: " + type + ") (Data: " + data + ")");
-		navigation.navigate("Info", data);
+		if(isFocused){
+			setScanned(true);
+			navigation.navigate("Info", data);
+		}
 	};
 
 	// Called when Componenet is Rendered.
