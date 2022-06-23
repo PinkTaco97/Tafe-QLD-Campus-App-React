@@ -56,7 +56,7 @@ function AppNavigator() {
 	const [auth, setAuth] = useState({
 		key: null,
 		token: null,
-		isLoading: false, 
+		isLoading: false,
 	});
 
 	// Called when the Componenet is Rendered.
@@ -152,8 +152,14 @@ function AppNavigator() {
 							// animation: "slide_from_bottom",
 						}}
 					>
-						<Stack.Screen name="Loading" component={LoadingScreen} />
-						<Stack.Screen name="AboutYou" component={AboutYouScreen} />
+						<Stack.Screen
+							name="Loading"
+							component={LoadingScreen}
+						/>
+						<Stack.Screen
+							name="AboutYou"
+							component={AboutYouScreen}
+						/>
 						<Stack.Screen name="Main" component={TabNavigator} />
 						<Stack.Screen name="Auth" component={AuthNavigator} />
 						<Stack.Screen

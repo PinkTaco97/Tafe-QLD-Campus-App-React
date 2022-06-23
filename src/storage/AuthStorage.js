@@ -1,6 +1,6 @@
 /**
  * @author	Nathan Robertson
- * @purpose	An interface to CRUD Profile data in Local Storage.
+ * @purpose	An Interface to CRUD Authentication Data in Local Storage.
  * @version	v1.0
  * @date	30/05/2022
  */
@@ -13,7 +13,7 @@ import settings from "../config/settings";
 
 // Store the Users Authentication Data in Local Storage.
 async function storeAuth(auth) {
-	// Print the Action to the Console. 
+	// Print the Action to the Console.
 	if (settings.isDebug) console.log("Saving Authentication...");
 
 	try {

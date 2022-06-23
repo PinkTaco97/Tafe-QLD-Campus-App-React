@@ -1,6 +1,6 @@
 /**
  * @author	Nathan Robertson
- * @purpose	An interface to CRUD Profile data in Local Storage.
+ * @purpose	An Interface to CRUD Profile data in Local Storage.
  * @version	v1.0
  * @date	30/05/2022
  */
