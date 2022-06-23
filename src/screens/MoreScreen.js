@@ -104,7 +104,7 @@ function MoreScreen({ navigation }) {
 					}
 					ListFooterComponent={() => (
 						<>
-							{/* <Button
+							<Button
 								title="Show Profile"
 								onPress={() => {
 									console.log(profileContext.profile);
@@ -116,7 +116,7 @@ function MoreScreen({ navigation }) {
 									ProfileStorage.removeProfile();
 									profileContext.setProfile(null);
 								}}
-							/> */}
+							/>
 							{authContext.auth != null ? (
 								<Button
 									title="Logout"

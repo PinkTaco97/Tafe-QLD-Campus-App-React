@@ -16,4 +16,5 @@ web-build/
 
 # Project
 docs/
+builds/
 .env

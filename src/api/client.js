@@ -6,7 +6,7 @@ import { create } from "apisauce";
 //baseURL: 'http://127.0.0.1:8000/'
 //baseURL: 'http://robina.elankayer.net:8081'
 const client = create({
-	baseURL: "http://139.218.85.171:8000/",
+	baseURL: 'http://139.218.85.171:8000/'
 });
 
 // Export the API Layer.

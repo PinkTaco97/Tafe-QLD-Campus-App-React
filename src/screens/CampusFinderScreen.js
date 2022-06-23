@@ -2,9 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import {
 	Dimensions,
+	ScrollView,
 	StyleSheet,
 	View,
 	SafeAreaView,
+	Alert,
+	Text,
 } from 'react-native';
 import MapView, { Callout, Marker } from 'react-native-maps';
 import { FontAwesome } from '@expo/vector-icons';
@@ -18,12 +21,20 @@ import campusApi from '../api/campus';
 // Import UI Components.
 import Header from '../components/Header';
 import CampusCallout from '../components/CampusCallout';
+import Space from '../components/Space';
+import CampusDetails from '../components/CampusDetails';
 
 // Render the Campus Finder Screen.
 function CampusFinderScreen({ navigation }) {
 
 	// Whether there was an error. 
 	const [error, setError] = useState(false);
+
+	// Whether there was an error. 
+	const [detailsShown, setDetailsShown] = useState(false);
+
+	// The Selected Campus.
+	const [selectedCampus, setSelectedCampus] = useState(null);
 
 	// The Campuses loaded from the Database.
 	const [campuses, setCampuses] = useState([]);
@@ -70,48 +81,61 @@ function CampusFinderScreen({ navigation }) {
 					back={true}
 					onBack={() => {navigation.navigate("More");}}
 				/>
-				<MapView
-					style={styles.map}
-					initialRegion={{
-						latitude: -27.853249,
-						longitude: 153.321111,
-						latitudeDelta: 0.1,
-						longitudeDelta: 0.1,
-					}}
-					showsUserLocation={true}
-					showsMyLocationButton={true}
-					loadingEnabled={true}
-                    showsPointsOfInterest={false}
-                    showsCompass={true}
-				>
-					{/* Show a Custom Marker for user Location.
-					<Marker
-						coordinate={{
-							latitude: -27.833550,
+				<ScrollView>
+					<MapView
+						style={detailsShown === false ? styles.map : styles.mapOpen}
+						initialRegion={{
+							latitude: -27.853249,
 							longitude: 153.321111,
+							latitudeDelta: 0.1,
+							longitudeDelta: 0.1,
 						}}
+						showsUserLocation={true}
+						showsMyLocationButton={true}
+						loadingEnabled={true}
+						showsPointsOfInterest={false}
+						showsCompass={true}
+						onPress={() => setDetailsShown(false)}
 					>
-					<FontAwesome name="circle-o" size={25} color={colors.locationMarker}/>
-						<Callout>
-							<Text style={{width: 100}}>Your Location</Text>
-						</Callout>
-					</Marker> */}
-					{campuses.map((campus) => <Marker
-						key={campus.id}
-						coordinate={{
-							latitude: Number(campus.latitude),
-							longitude: Number(campus.longitude),
-						}}
-					>
-					{/* <FontAwesome name="map-marker" size={75} color={colors.primary}/> */}
-						<Callout tooltip={true}>
-							<CampusCallout
-								name={campus.name}
-								imageURL={campus.phone}
-							/>
-						</Callout>
-					</Marker>)}
-				</MapView>
+						{/* Show a Custom Marker for user Location.
+						<Marker
+							coordinate={{
+								latitude: -27.833550,
+								longitude: 153.321111,
+							}}
+						>
+						<FontAwesome name="circle-o" size={25} color={colors.locationMarker}/>
+							<Callout>
+								<Text style={{width: 100}}>Your Location</Text>
+							</Callout>
+						</Marker> */}
+						{campuses.map((campus) => <Marker
+							key={campus.id}
+							coordinate={{
+								latitude: Number(campus.latitude),
+								longitude: Number(campus.longitude),
+							}}
+							onPress={() => {
+								setDetailsShown(true);
+								setSelectedCampus(campus);
+							}}
+						>
+						{/* <FontAwesome name="map-marker" size={75} color={colors.primary}/> */}
+							<Callout tooltip={false}>
+								<Text>{campus.name}</Text>
+								{/* <CampusCallout
+									name={campus.name}
+									imageURL={campus.phone}
+								/> */}
+							</Callout>
+						</Marker>)}
+					</MapView>
+					{selectedCampus !== null ?
+						<CampusDetails campus={selectedCampus}/>
+						:
+						<></>
+					}
+				</ScrollView>
 			</View>
 		</SafeAreaView>
     );
@@ -130,6 +154,10 @@ const styles = StyleSheet.create({
 	map: {
 		width: Dimensions.get('window').width,
 		height: Dimensions.get('window').height,
+	},
+	mapOpen: {
+		width: Dimensions.get('window').width,
+		height: Dimensions.get('window').height/2,
 	},
 })
 

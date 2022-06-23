@@ -1,14 +1,21 @@
+/**
+ * @author	Nathan Robertson
+ * @purpose A React Native Component that Renders Event Information that is displayed in a List View.
+ * @version	v1.0.0
+ * @date	23/06/2022
+ */
+
 // Import Thrid Party Libraies.
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+	Image,
+	StyleSheet,
+	Text,
+	TouchableOpacity
+} from "react-native";
 
 // Import Config Settings.
 import colors from "../config/colors";
-
-// Import UI Compponents.
-import Button from "../components/Button";
-import BackButton from "./BackButton";
-import Space from "./Space";
 
 // Render the EventItem Component.
 function EventItem({
@@ -50,6 +57,7 @@ const styles = StyleSheet.create({
 	},
 	date: {
 		height: 30,
+		lineHeight: 30,
 		position: "absolute",
 		top: 10,
 		right: 10,
@@ -64,6 +72,7 @@ const styles = StyleSheet.create({
 	},
 	location: {
 		height: 30,
+		lineHeight: 30,
 		position: "absolute",
 		top: 10,
 		left: 10,
@@ -77,7 +86,8 @@ const styles = StyleSheet.create({
 		overflow: "hidden",
 	},
 	title: {
-		height: 75,
+		height: 50,
+		lineHeight: 50,
 		fontSize: 25,
 		fontWeight: "bold",
 		color: colors.dark,

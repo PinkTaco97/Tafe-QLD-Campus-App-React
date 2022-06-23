@@ -27,8 +27,8 @@ function CampusCallout({name, imageURL, onPress}) {
 	const image = { uri: 'https://tafeqld.edu.au/content/dam/tafe/en/campuses/coomera/gold-coast_coomera-campus-aerial_1920x1080.jpg' }
     return ( 
 		<View style={styles.container} onPress={onPress}>
-			<Text style={styles.title}>{name}</Text>
-			<ImageBackground  style={styles.image} source={image}/>
+			{/* <Text style={styles.title}>{name}</Text> */}
+			{/* <Image  style={styles.image} source={image}/> */}
 			
 		</View>
     );
@@ -38,14 +38,16 @@ function CampusCallout({name, imageURL, onPress}) {
 const styles = StyleSheet.create({
 	container: {
 		// flex: 1,
-		width: 250,
+		width: '90%',
 		height: 250,
+		position: 'absolute',
 		// alignItems: 'center',
 		// justifyContent: 'center',
         backgroundColor: colors.light,
 		borderRadius: 10,
 		overflow: 'hidden',
 		// margin: 25,
+		zIndex: 10,
 	},
 	image: {
 		width: 50,
